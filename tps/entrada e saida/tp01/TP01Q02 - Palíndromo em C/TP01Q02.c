@@ -26,7 +26,7 @@ int main(){
 
     // Leitura da entrada padrao
     do{
-        scanf("%[^\n]s", entrada[numEntrada]);
+        scanf(" %[^\n]s", entrada[numEntrada]);
     } while (isFim(entrada[numEntrada++]) == false);
     numEntrada--; // Desconsiderar ultima linha contendo a palavra FIM
 
