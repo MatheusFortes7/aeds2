@@ -7,10 +7,9 @@ bool isFim(char s[]){
 }
 
 bool verificarPalindromo(char s[]){
-    bool resp = false;
-    int j = 0; 
-    for(int i = strlen(s) - 1; i >=0 && resp; i--, j++){ //corre a string armazenando os caracteres de traz para frente
-        if(s[i] != s[(strlen(s) -1 )]){
+    bool resp = false; 
+    for(int i = 0 ; i < strlen(s); i++){ //corre a string armazenando os caracteres de traz para frente
+        if(s[i] == s[(strlen(s) -i -1 )]){
             resp = true;
         } else {
             resp = false;
@@ -26,7 +25,7 @@ int main(){
 
     // Leitura da entrada padrao
     do{
-        scanf(" %[^\n]s", entrada[numEntrada]);
+        scanf("%[^\n]s", entrada[numEntrada]);
     } while (isFim(entrada[numEntrada++]) == false);
     numEntrada--; // Desconsiderar ultima linha contendo a palavra FIM
 
