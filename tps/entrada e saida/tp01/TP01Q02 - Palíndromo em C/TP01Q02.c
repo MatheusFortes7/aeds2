@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <string.h>
 
 bool isFim(char s[]){
     return (strlen(s) == 3 && s[0] == 'F' && s[1] == 'I' && s[2] == 'M');
@@ -20,7 +21,7 @@ bool verificarPalindromo(char s[]){
 }
 
 int main(){
-    char entrada[1000];
+    char entrada[1000][100];
     int numEntrada = 0;
 
     // Leitura da entrada padrao
