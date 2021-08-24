@@ -5,12 +5,12 @@ class TP01Q03 {
 
     public static boolean verificarPalindromo(String s) {
         Boolean resp = false;
-        for (int i = 0; i < s.length(); i++) {
+        for (int i = 0; i < s.length(); i++) { // corre a string inteira, comparando os caracteres em ordem inversa com a string original 
             if (s.charAt(i) == s.charAt(s.length() - i -1)){
                 resp = true;
             } else {
                 resp = false;
-                i = s.length();
+                i = s.length(); // terminando a funcao, com a condição de parada
             }
         }
 
@@ -31,17 +31,11 @@ class TP01Q03 {
         // maiusculas da entrada
         for (int i = 0; i < numEntrada; i++) {
             if(verificarPalindromo(entrada[i])){
-                MyIO.println("SIM");
+                MyIO.println("SIM"); // se a funcao retornar true
             } else {
-                MyIO.println("NAO");
+                MyIO.println("NAO"); // se a funcao retornar um false
             }
         }
     }
 }
 
-// arara
-// a
-// ar
-// ara
-// arar
-// arara
