@@ -114,7 +114,7 @@ class TP01Q08 {
         }while(isFim(entrada[numEntrada++]) == false);
         numEntrada--;
 
-        for(int i = 0; i < numEntrada; i++){
+        for(int i = 1; i < numEntrada; i= i + 2){
             html = getHtml(entrada[i]);
             MyIO.println(lerHtml(html) + entrada[i-1]);
         }
