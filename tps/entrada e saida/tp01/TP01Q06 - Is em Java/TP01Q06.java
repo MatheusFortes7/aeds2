@@ -6,26 +6,42 @@ class TP01Q06{
 
     
     public static String isVogal(String s) {
-        for(int i = 0; i < s.length(); i++){
-            if(s.charAt(i) != 'a' && s.charAt(i) != 'e' && s.charAt(i) != 'i' && s.charAt(i) != 'o' && s.charAt(i) != 'u'){
-                i = s.length();
-                return "NAO";
-            } 
+        String z = s.toLowerCase();
+        boolean resp = false;
+        for(int i = 0; i < z.length(); i++){
+            if(z.charAt(i) != 'a' || z.charAt(i) != 'e' || z.charAt(i) != 'i' || z.charAt(i) != 'o' || z.charAt(i) != 'u'){
+                i = z.length();
+                resp = false;
+            } else {
+                resp = true;
+            }
         }
-        return "SIM";
+        if (resp == false){
+            return "NAO";
+        } else {
+            return "SIM";
+        }
     }
 
     public static String isConsoante(String s){
-        for(int i = 0; i < s.length();i++){
-            if(s.charAt(i) == 'a' && s.charAt(i) == 'e' && s.charAt(i) == 'i' && s.charAt(i) == 'o' && s.charAt(i) == 'u'){
-                i = s.length();
-                return "NAO";
+        String z = s.toLowerCase();
+        boolean resp = false;
+        for(int i = 0; i < z.length();i++){
+            if(z.charAt(i) == 'a' || z.charAt(i) == 'e' || z.charAt(i) == 'i' || z.charAt(i) == 'o' || z.charAt(i) == 'u'){
+                i = z.length();
+                resp = false;
+            } else {
+                resp = true;
             }
         }
-        return "SIM";
+        if (resp == false){
+            return "NAO";
+        } else {
+            return "SIM";
+        }
     }
 
-    //FALTA VER SE É INTEIRO (QUE NAO SEI COMO), E QUANDO ELE E U NUMERO REAL <----------------------------------------------------- IMPORTANTE
+    //FALTA VER SE É INTEIRO (QUE NAO SEI COMO), E QUANDO ELE E U NUMERO REAL <----------------------------------------------------- IMPORTANTE check tipe
 
     public static void main (String[] args){
         String[] entrada = new String[1000];
