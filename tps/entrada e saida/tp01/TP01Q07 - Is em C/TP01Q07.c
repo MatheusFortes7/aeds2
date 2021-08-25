@@ -19,7 +19,7 @@ int isVogal(char s[]){
 
 int isConsoante(char s[]){
     for(int i = 0; i < strlen(s); i++){
-    if(strlen(s) == 'a' && strlen(s) == 'e' && strlen(s) == 'i' && strlen(s) == 'o' && strlen(s) == 'u'){
+    if(s[i] == 'a' && s[i] == 'e' && s[i] == 'i' && s[i] == 'o' && s[i] == 'u'){
             i = strlen(s);
             return "NAO";
         }
