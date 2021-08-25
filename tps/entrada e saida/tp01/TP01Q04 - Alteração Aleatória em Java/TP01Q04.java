@@ -6,12 +6,12 @@ class TP01Q04 {
     }
 
     // funcao que percorrerá a string trocando seus caracteres seguindo o enunciado
-    public static String trocarLetras(String s) {
+    public static String trocarLetras(String s, Random gerador) {
         String resp = "";
         char aleatorio, aleatorio2;
 
-        aleatorio = ((char)('a' + (Math.abs(gerador.nextInt(bound) % 26)))); // chave para alterar aleatoriamente um carcatere
-        aleatorio2 = ((char)('a' + (Math.abs(gerador.nextInt(bound) % 26))));
+        aleatorio = ((char)('a' + (Math.abs(gerador.nextInt(4) % 26)))); // chave para alterar aleatoriamente um carcatere
+        aleatorio2 = ((char)('a' + (Math.abs(gerador.nextInt(4) % 26))));
 
         for(int i = 0; i < s.length(); i++){
             if(s.charAt(i) == aleatorio2){ //FALTA ESSA PARTE AQUI Ó <------
@@ -38,7 +38,7 @@ class TP01Q04 {
         // Para cada linha de entrada, gerando uma de saida contendo o numero de letras
         // maiusculas da entrada
         for (int i = 0; i < numEntrada; i++) {
-            MyIO.println(trocarLetras(entrada[i]));
+            MyIO.println(trocarLetras(entrada[i], gerador));
         }
     }
 }

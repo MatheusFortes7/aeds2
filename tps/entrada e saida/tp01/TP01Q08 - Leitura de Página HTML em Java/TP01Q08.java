@@ -57,39 +57,39 @@ class TP01Q08 {
                 o++;
             } else if(html.charAt(z) == 'u'){
                 u++;
-            } else if(html.charAt(z) == 'á'){
+            } else if(html.charAt(z) == '\u00E1'){
                 aAcento++;
-            } else if(html.charAt(z) == 'é'){
+            } else if(html.charAt(z) == '\u00E9'){
                 eAcento++;
-            } else if(html.charAt(z) == 'í'){
+            } else if(html.charAt(z) == '\u00ED'){
                 iAcento++;
-            } else if(html.charAt(z) == 'ó'){
+            } else if(html.charAt(z) == '\u00F3'){
                 oAcento++;
-            } else if(html.charAt(z) == 'ú'){
+            } else if(html.charAt(z) == '\u00FA'){
                 uAcento++;
-            } else if(html.charAt(z) == 'à'){
+            } else if(html.charAt(z) == '\u00E0'){
                 aAcento2++;
-            } else if(html.charAt(z) == 'è'){
+            } else if(html.charAt(z) == '\u00E8'){
                 eAcento2++;
-            } else if(html.charAt(z) == 'ì'){
+            } else if(html.charAt(z) == '\u00EC'){
                 iAcento2++;
-            } else if(html.charAt(z) == 'ò'){
+            } else if(html.charAt(z) == '\u00F2'){
                 oAcento2++;
-            } else if(html.charAt(z) == 'ù'){
+            } else if(html.charAt(z) == '\u00F9'){
                 uAcento2++;
-            } else if(html.charAt(z) == 'â'){
+            } else if(html.charAt(z) == '\u00E3'){
                 aChapeu++;
-            } else if(html.charAt(z) == 'ê'){
+            } else if(html.charAt(z) == '\u00F5'){
                 eChapeu++;
-            } else if(html.charAt(z) == 'î'){
+            } else if(html.charAt(z) == '\u00E2'){
                 iChapeu++;
-            } else if(html.charAt(z) == 'ô'){
+            } else if(html.charAt(z) == '\u00EA'){
                 oChapeu++;
-            } else if(html.charAt(z) == 'û'){
+            } else if(html.charAt(z) == '\u00EE'){
                 uChapeu++;
-            } else if(html.charAt(z) == 'ã'){
+            } else if(html.charAt(z) == '\u00F4'){
                 aTil++;
-            } else if(html.charAt(z) == 'õ'){
+            } else if(html.charAt(z) == '\u00FB'){
                 oTil++;
             } else if(html.charAt(z) == '<' && html.charAt(z+1) == 'b' && html.charAt(z+2) == 'r' && html.charAt(z+3) == '>'){
                 br++;
@@ -105,6 +105,7 @@ class TP01Q08 {
     }
 
     public static void main(String[] args) {
+        MyIO.setCharset("utf-8");
         String[] entrada = new String[2000];
         int numEntrada = 0;
         String html;
