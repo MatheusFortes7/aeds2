@@ -27,11 +27,13 @@ class TP01Q06{
         String z = s.toLowerCase();
         boolean resp = false;
         for(int i = 0; i < z.length();i++){
-            if(z.charAt(i) == 'a' || z.charAt(i) == 'e' || z.charAt(i) == 'i' || z.charAt(i) == 'o' || z.charAt(i) == 'u'){
-                i = z.length();
-                resp = false;
-            } else {
-                resp = true;
+            if ((int) s.charAt(i) > 64 && (int) s.charAt(i)< 91){
+                if(z.charAt(i) == 'a' || z.charAt(i) == 'e' || z.charAt(i) == 'i' || z.charAt(i) == 'o' || z.charAt(i) == 'u'){
+                    i = z.length();
+                    resp = false;
+                } else {
+                    resp = true;
+                }
             }
         }
         if (resp == false){
@@ -41,7 +43,43 @@ class TP01Q06{
         }
     }
 
-    //FALTA VER SE É INTEIRO (QUE NAO SEI COMO), E QUANDO ELE E U NUMERO REAL <----------------------------------------------------- IMPORTANTE check tipe
+    public static String isInteiro (String s) {
+        boolean resp = false;
+        for(int i =0; i < s.length(); i++){
+            if((int)s.charAt(i) > 47 && (int)s.charAt(i) < 58){
+                resp = true;
+            } else {
+                resp = false;
+                i = s.length();
+            }
+        }
+        if(resp == true){
+            return "SIM";
+        } else {
+            return "NAO";
+        }
+        
+        
+    }
+
+    public static String isReal (String s){
+        boolean resp = false;
+        for(int i =0; i < s.length(); i++){
+            if((int)s.charAt(i) > 47 && (int)s.charAt(i) < 58 || s.charAt(i) == 46){
+                resp = true;
+            } else {
+                resp = false;
+                i = s.length();
+            }
+        }
+        if(resp == true){
+           return "SIM";
+        } else {
+            return "NAO";
+        }
+        
+    }
+
 
     public static void main (String[] args){
         String[] entrada = new String[1000];
@@ -55,7 +93,7 @@ class TP01Q06{
   
         //Para cada linha de entrada, gerando uma de saida contendo o numero de letras maiusculas da entrada
         for(int i = 0; i < numEntrada; i++){
-           MyIO.println(isVogal(entrada[i]) + isConsoante(entrada[i])  );
+           MyIO.println(isVogal(entrada[i]) + " " + isConsoante(entrada[i]) + " " + isInteiro(entrada[i]) + " " + isReal(entrada[i]) );
         }
      }
 }

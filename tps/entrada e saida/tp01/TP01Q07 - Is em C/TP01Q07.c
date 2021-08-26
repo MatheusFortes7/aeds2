@@ -8,43 +8,79 @@ bool isFim(char s[]){
     return (strlen(s) == 3 && s[0] == 'F' && s[1] == 'I' && s[2] == 'M');
 }
 
-int isVogal(char s[]){
-    char z[] = tolower(s);
+void isVogal(char s[]){
     bool resp = false;
-    for(int i = 0 ; i < strlen(z); i++){ //corre a string armazenando os caracteres de traz para frente
-        if(z[i] != 'a' || z[i] != 'e' || z[i] != 'i' || z[i] != 'o' || z[i] != 'u' ){
-            i = strlen(z);
-            resp = false;
-        } else {
+    for(int i = 0 ; i < strlen(s); i++){ 
+        if(s[i] == 'a' || s[i] == 'e' || s[i] == 'i' || s[i] == 'o' || s[i] == 'u' || s[i] == 'A' || s[i] == 'E' || s[i] == 'I' || s[i] == 'O' || s[i] == 'U'){
             resp = true;
+        } else {
+            i = strlen(s);
+            resp = false;
         }     
     }
     if (resp == false){
-        return "NAO";
+        printf("NAO");
     } else {
-        return "SIM";
+        printf("SIM");
     }
 }
 
-int isConsoante(char s[]){
-    char z[] = tolower(s);
+void isConsoante(char s[]){
     bool resp  = false;
-    for(int i = 0; i < strlen(z); i++){
-    if(z[i] == 'a' || z[i] == 'e' || z[i] == 'i' || z[i] == 'o' || z[i] == 'u'){
-            i = strlen(z);
-            resp = false;
-        } else {
+    for(int i = 0; i < strlen(s); i++){
+        if( (int)s[i] > 64 && (int)s[i] < 91 || (int)s[i] > 96 && (int)s[i] < 123){    
+            if(s[i] == 'a' || s[i] == 'e' || s[i] == 'i' || s[i] == 'o' || s[i] == 'u' || s[i] == 'A' || s[i] == 'E' || s[i] == 'I' || s[i] == 'O' || s[i] == 'U'){
+                i = strlen(s);
+                resp = false;
+            } else {
+                resp = true;
+            }
+        }
+        }
+    if (resp == false){
+        printf("NAO");
+    } else {
+        printf("SIM");
+    }
+}
+
+void isInteiro(char s[]){
+    bool resp = false;
+    for(int i = 0; i < strlen(s); i++){
+        if ((int)s[i] > 47 && (int)s[i] < 58){
             resp = true;
+        } else {
+            i = strlen(s);
+            resp = false;
         }
     }
-    if (resp == false){
-        return "NAO";
+
+    if (resp == true){
+        printf("SIM");
     } else {
-        return "SIM";
+        printf("NAO");
     }
 }
 
-//FALTA VER SE É INTEIRO (QUE NAO SEI COMO), E QUANDO ELE E U NUMERO REAL <----------------------------------------------------- IMPORTANTE
+void isReal (char s[]){
+        bool resp = false;
+        for(int i =0; i < strlen(s); i++){
+            if((int)s[i] > 47 && (int)s[i] < 58 || s[i] == 46){
+                resp = true;
+            } else {
+                resp = false;
+                i = strlen(s);
+            }
+        }
+        if(resp == true){
+            printf("SIM");
+        } else {
+            printf("NAO");
+        }
+        
+    }
+
+
 
 int main(){
     char entrada[1000][100];
@@ -59,7 +95,14 @@ int main(){
     // Para cada linha de entrada, gerando uma de saida contendo o numero de letras
     // maiusculas da entrada
     for (int i = 0; i < numEntrada; i++){
-        printf(isVogal(entrada[i]) + isConsoante(entrada[i]) );
+        isVogal(entrada[i]);
+        printf(" ");
+        isConsoante(entrada[i]);
+        printf(" ");
+        isInteiro(entrada[i]);
+        printf(" ");
+        isReal(entrada[i]);
+        printf("\n");
     }
     return 0;
 }

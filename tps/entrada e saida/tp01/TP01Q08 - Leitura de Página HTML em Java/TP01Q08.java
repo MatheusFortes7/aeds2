@@ -45,7 +45,6 @@ class TP01Q08 {
         int aTil = 0, oTil = 0;
         int consoantes = 0;
         int br = 0, table = 0;
-
         for(int z = 0; z < html.length(); z++){
             if(html.charAt(z) == 'a'){
                 a++;
@@ -57,39 +56,39 @@ class TP01Q08 {
                 o++;
             } else if(html.charAt(z) == 'u'){
                 u++;
-            } else if(html.charAt(z) == '\u00E1'){
+            } else if((int)html.charAt(z) == 160){
                 aAcento++;
-            } else if(html.charAt(z) == '\u00E9'){
+            } else if((int)html.charAt(z) == 130){
                 eAcento++;
-            } else if(html.charAt(z) == '\u00ED'){
+            } else if((int)html.charAt(z) == 161){
                 iAcento++;
-            } else if(html.charAt(z) == '\u00F3'){
+            } else if((int)html.charAt(z) == 162){
                 oAcento++;
-            } else if(html.charAt(z) == '\u00FA'){
+            } else if((int)html.charAt(z) == 163){
                 uAcento++;
-            } else if(html.charAt(z) == '\u00E0'){
+            } else if((int)html.charAt(z) == 133){
                 aAcento2++;
-            } else if(html.charAt(z) == '\u00E8'){
+            } else if((int)html.charAt(z) == 138){
                 eAcento2++;
-            } else if(html.charAt(z) == '\u00EC'){
+            } else if((int)html.charAt(z) == 141){
                 iAcento2++;
-            } else if(html.charAt(z) == '\u00F2'){
+            } else if((int)html.charAt(z) == 149){
                 oAcento2++;
-            } else if(html.charAt(z) == '\u00F9'){
+            } else if((int)html.charAt(z) == 151){
                 uAcento2++;
-            } else if(html.charAt(z) == '\u00E3'){
+            } else if((int)html.charAt(z) == 131){
                 aChapeu++;
-            } else if(html.charAt(z) == '\u00F5'){
+            } else if((int)html.charAt(z) == 136){
                 eChapeu++;
-            } else if(html.charAt(z) == '\u00E2'){
+            } else if((int)html.charAt(z) == 140){
                 iChapeu++;
-            } else if(html.charAt(z) == '\u00EA'){
+            } else if((int)html.charAt(z) == 147){
                 oChapeu++;
-            } else if(html.charAt(z) == '\u00EE'){
+            } else if((int)html.charAt(z) == 150){
                 uChapeu++;
-            } else if(html.charAt(z) == '\u00F4'){
+            } else if((int)html.charAt(z) == 198){
                 aTil++;
-            } else if(html.charAt(z) == '\u00FB'){
+            } else if((int)html.charAt(z) == 229){
                 oTil++;
             } else if(html.charAt(z) == '<' && html.charAt(z+1) == 'b' && html.charAt(z+2) == 'r' && html.charAt(z+3) == '>'){
                 br++;
@@ -101,11 +100,11 @@ class TP01Q08 {
                 consoantes++;
             }
         }
-        return "a("+a+") e("+e+") i("+i+") o("+o+") u("+u+") á("+aAcento+") é("+eAcento+") í("+iAcento+") ó("+oAcento+") ú("+uAcento+") à("+aAcento2+") è("+eAcento2+") ì("+iAcento2+") ò("+oAcento2+") ù("+uAcento2+") ầ("+aChapeu+") ê("+eChapeu+") î("+iChapeu+") ô("+oChapeu+") û("+uChapeu+") ã("+aTil+") õ("+oTil+") consoante("+consoantes+") <br>("+br+") <table>("+table+")";
+        return "a("+a+") e("+e+") i("+i+") o("+o+") u("+u+") á("+aAcento+") é("+eAcento+") í("+iAcento+") ó("+oAcento+") ú("+uAcento+") à("+aAcento2+") è("+eAcento2+") ì("+iAcento2+") ò("+oAcento2+") ù("+uAcento2+") ã("+aTil+") õ("+oTil+") ầ("+aChapeu+") ê("+eChapeu+") î("+iChapeu+") ô("+oChapeu+") û("+uChapeu+") consoante("+consoantes+") <br>("+br+") <table>("+table+")";
     }
 
     public static void main(String[] args) {
-        MyIO.setCharset("utf-8");
+        MyIO.setCharset("iso8859-1");
         String[] entrada = new String[2000];
         int numEntrada = 0;
         String html;
@@ -117,7 +116,7 @@ class TP01Q08 {
 
         for(int i = 1; i < numEntrada; i= i + 2){
             html = getHtml(entrada[i]);
-            MyIO.println(lerHtml(html) + entrada[i-1]);
+            MyIO.println(lerHtml(html) + " " + entrada[i-1]);
         }
    }    
 

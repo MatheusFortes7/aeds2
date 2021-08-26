@@ -10,8 +10,8 @@ class TP01Q04 {
         String resp = "";
         char aleatorio, aleatorio2;
 
-        aleatorio = ((char)('a' + (Math.abs(gerador.nextInt(4) % 26)))); // chave para alterar aleatoriamente um carcatere
-        aleatorio2 = ((char)('a' + (Math.abs(gerador.nextInt(4) % 26))));
+        aleatorio = ((char)('a' + (Math.abs(gerador.nextInt() % 26)))); // chave para alterar aleatoriamente um carcatere
+        aleatorio2 = ((char)('a' + (Math.abs(gerador.nextInt() % 26))));
 
         for(int i = 0; i < s.length(); i++){
             if(s.charAt(i) == aleatorio2){ //FALTA ESSA PARTE AQUI Ó <------
