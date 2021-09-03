@@ -1,123 +1,189 @@
 import java.io.*;
 import java.net.*;
 
-class TP01Q08 {
-    
-    public static boolean isFim(String s){
-        return(s.length() == 3 && s.charAt(0) == 'F' && s.charAt(1) == 'I' && s.charAt(2) == 'M');
-    }
-    
-    // codigo copiado do github da materia de aeds2
-    public static String getHtml(String endereco){
-        URL url;
-        InputStream is = null;
-        BufferedReader br;
-        String resp = "", line;
+class TP01Q08{
+   public static boolean isFim(String s) {
+      return (s.length() >= 3 && s.charAt(0) == 'F' && s.charAt(1) == 'I' && s.charAt(2) == 'M');
+   }
 
-        try {
-            url = new URL(endereco);
-            is = url.openStream();  // throws an IOException
-            br = new BufferedReader(new InputStreamReader(is));
+   public static String Html(String end) {
+      URL url;
+      InputStream is = null;
+      BufferedReader br;
+      String resp = "", line;
 
-            while ((line = br.readLine()) != null) {
-                resp += line + "\n";
+      try {
+         url = new URL(end);
+         is = url.openStream();
+         br = new BufferedReader(new InputStreamReader(is));
+
+         while ((line = br.readLine()) != null) {
+            resp += line + "\n";
+         }
+      } catch (MalformedURLException mue) {
+         mue.printStackTrace();
+      } catch (IOException ioe) {
+         ioe.printStackTrace();
+      }
+      try {
+         is.close();
+      } catch (IOException ioe) {
+      }
+      return resp;
+   }
+
+   public static int Tag(String html, String tag) {
+      int qtd = 0;
+      if (tag == "<table>") {
+         for (int i = 0; i < html.length(); i++) {
+            if (html.charAt(i) == '<') {
+               if (html.charAt(i + 1) == 't' && html.charAt(i + 2) == 'a' && html.charAt(i + 3) == 'b'
+                     && html.charAt(i + 4) == 'l' && html.charAt(i + 5) == 'e' && html.charAt(i + 6) == '>') {
+                  qtd++;
+               }
             }
-        } catch (MalformedURLException mue) {
-            mue.printStackTrace();
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-        } 
-
-        try {
-            is.close();
-        } catch (IOException ioe) {
-            // nothing to see here
-        }
-
-        return resp;
-    }
-
-    public static String lerHtml(String html){
-        int a = 0, e = 0, i = 0, o = 0, u = 0;
-        int aAcento = 0, eAcento = 0, iAcento = 0, oAcento = 0, uAcento = 0;
-        int aAcento2 = 0, eAcento2 = 0, iAcento2 = 0, oAcento2 = 0, uAcento2 = 0;
-        int aChapeu = 0, eChapeu = 0, iChapeu = 0, oChapeu = 0, uChapeu = 0;
-        int aTil = 0, oTil = 0;
-        int consoantes = 0;
-        int br = 0, table = 0;
-        for(int z = 0; z < html.length(); z++){
-            if(html.charAt(z) == 'a'){
-                a++;
-            } else if(html.charAt(z) == 'e'){
-                e++;
-            } else if(html.charAt(z) == 'i'){
-                i++;
-            } else if(html.charAt(z) == 'o'){
-                o++;
-            } else if(html.charAt(z) == 'u'){
-                u++;
-            } else if((int)html.charAt(z) == 160){
-                aAcento++;
-            } else if((int)html.charAt(z) == 130){
-                eAcento++;
-            } else if((int)html.charAt(z) == 161){
-                iAcento++;
-            } else if((int)html.charAt(z) == 162){
-                oAcento++;
-            } else if((int)html.charAt(z) == 163){
-                uAcento++;
-            } else if((int)html.charAt(z) == 133){
-                aAcento2++;
-            } else if((int)html.charAt(z) == 138){
-                eAcento2++;
-            } else if((int)html.charAt(z) == 141){
-                iAcento2++;
-            } else if((int)html.charAt(z) == 149){
-                oAcento2++;
-            } else if((int)html.charAt(z) == 151){
-                uAcento2++;
-            } else if((int)html.charAt(z) == 131){
-                aChapeu++;
-            } else if((int)html.charAt(z) == 136){
-                eChapeu++;
-            } else if((int)html.charAt(z) == 140){
-                iChapeu++;
-            } else if((int)html.charAt(z) == 147){
-                oChapeu++;
-            } else if((int)html.charAt(z) == 150){
-                uChapeu++;
-            } else if((int)html.charAt(z) == 198){
-                aTil++;
-            } else if((int)html.charAt(z) == 229){
-                oTil++;
-            } else if(html.charAt(z) == '<' && html.charAt(z+1) == 'b' && html.charAt(z+2) == 'r' && html.charAt(z+3) == '>'){
-                br++;
-                z = z + 3;
-            } else if(html.charAt(z) == '<' && html.charAt(z+1) == 't'&& html.charAt(z+2) == 'a' && html.charAt(z+3) == 'b' && html.charAt(z+4) == 'l' && html.charAt(z+5) == 'e' && html.charAt(z+6) == '>'){
-                table++;
-                z = z + 6;
-            } else if(html.charAt(z) != 'a' && html.charAt(z) != 'e' && html.charAt(z) != 'i' && html.charAt(z) != 'o' && html.charAt(z) != 'u') {
-                consoantes++;
+         }
+      } else {
+         for (int i = 0; i < html.length(); i++) {
+            if (html.charAt(i) == '<') {
+               if (html.charAt(i + 1) == 'b' && html.charAt(i + 2) == 'r' && html.charAt(i + 3) == '>') {
+                  qtd++;
+               }
             }
-        }
-        return "a("+a+") e("+e+") i("+i+") o("+o+") u("+u+") á("+aAcento+") é("+eAcento+") í("+iAcento+") ó("+oAcento+") ú("+uAcento+") à("+aAcento2+") è("+eAcento2+") ì("+iAcento2+") ò("+oAcento2+") ù("+uAcento2+") ã("+aTil+") õ("+oTil+") ầ("+aChapeu+") ê("+eChapeu+") î("+iChapeu+") ô("+oChapeu+") û("+uChapeu+") consoante("+consoantes+") <br>("+br+") <table>("+table+")";
-    }
+         }
+      }
+      return qtd;
+   }
 
-    public static void main(String[] args) {
-        MyIO.setCharset("iso8859-1");
-        String[] entrada = new String[2000];
-        int numEntrada = 0;
-        String html;
+   public static void Contador(String html, String titulo) {
+      int[] qtd = new int[25];
+      qtd[23] = Tag(html, "<br>");
+      qtd[24] = Tag(html, "<table>");
+      for (int i = 0; i < html.length(); i++) {
+         if (html.charAt(i) >= 97 && html.charAt(i) <= 122 && (html.charAt(i) != 97 && html.charAt(i) != 101
+               && html.charAt(i) != 105 && html.charAt(i) != 111 && html.charAt(i) != 117)) {
+            qtd[22]++;
+         } else {
+            if (html.charAt(i) == 'a')
+               qtd[0]++;
+            else {
+               if (html.charAt(i) == 'e')
+                  qtd[1]++;
+               else {
+                  if (html.charAt(i) == 'i')
+                     qtd[2]++;
+                  else {
+                     if (html.charAt(i) == 'o')
+                        qtd[3]++;
+                     else {
+                        if (html.charAt(i) == 'u')
+                           qtd[4]++;
+                        else {
+                           if (html.charAt(i) == '\u00E1') 
+                              qtd[5]++;
+                           else {
+                              if (html.charAt(i) == '\u00E9')
+                                 qtd[6]++;
+                              else {
+                                 if (html.charAt(i) == '\u00ED')
+                                    qtd[7]++;
+                                 else {
+                                    if (html.charAt(i) == '\u00F3')
+                                       qtd[8]++;
+                                    else {
+                                       if (html.charAt(i) == '\u00FA')
+                                          qtd[9]++;
+                                       else {
+                                          if (html.charAt(i) == '\u00E0')
+                                             qtd[10]++;
+                                          else {
+                                             if (html.charAt(i) == '\u00E8')
+                                                qtd[11]++;
+                                             else {
+                                                if (html.charAt(i) == '\u00EC')
+                                                   qtd[12]++;
+                                                else {
+                                                   if (html.charAt(i) == '\u00F2')
+                                                      qtd[13]++;
+                                                   else {
+                                                      if (html.charAt(i) == '\u00F9')
+                                                         qtd[14]++;
+                                                      else {
+                                                         if (html.charAt(i) == '\u00E3')
+                                                            qtd[15]++;
+                                                         else {
+                                                            if (html.charAt(i) == '\u00F5')
+                                                               qtd[16]++;
+                                                            else {
+                                                               if (html.charAt(i) == '\u00E2')
+                                                                  qtd[17]++;
+                                                               else {
+                                                                  if (html.charAt(i) == '\u00EA')
+                                                                     qtd[18]++;
+                                                                  else {
+                                                                     if (html.charAt(i) == '\u00EE')
+                                                                        qtd[19]++;
+                                                                     else {
+                                                                        if (html.charAt(i) == '\u00F4')
+                                                                           qtd[20]++;
+                                                                        else {
+                                                                           if (html.charAt(i) == '\u00FB')
+                                                                              qtd[21]++;
+                                                                        }
+                                                                     }
+                                                                  }
+                                                               }
+                                                            }
+                                                         }
+                                                      }
+                                                   }
+                                                }
+                                             }
+                                          }
+                                       }
+                                    }
+                                 }
+                              }
+                           }
+                        }
+                     }
+                  }
+               }
+            }
+         }
+      }
 
-        do{
-            entrada[numEntrada] = MyIO.readLine();
-        }while(isFim(entrada[numEntrada++]) == false);
-        numEntrada--;
+      if (qtd[24] > 0) { 
+         qtd[0] = qtd[0] - qtd[24];
+         qtd[1] = qtd[1] - qtd[24];
+         qtd[22] = qtd[22] - 3 * qtd[24];
+      }
+      if (qtd[23] > 0) {
+         qtd[22] = qtd[22] - 2 * qtd[23];
+      }
 
-        for(int i = 1; i < numEntrada; i= i + 2){
-            html = getHtml(entrada[i]);
-            MyIO.println(lerHtml(html) + " " + entrada[i-1]);
-        }
-   }    
+      System.out.println("a(" + (qtd[0]) + ") e(" + (qtd[1]) + ") i(" + qtd[2] + ") o(" + qtd[3] + ") u(" + qtd[4]+ ") "+ (char)'\u00E1' +"(" + qtd[5] + ") "+ (char)'\u00E9' +"(" + qtd[6] + ") "+ (char)'\u00ED' +"(" + qtd[7] + ") "+ (char)'\u00F3' +"(" + qtd[8] + ") "+ (char)'\u00FA' +"(" + qtd[9] + ") "+ (char)'\u00E0' +"(" + qtd[10]+ ") "+ (char)'\u00E8' +"(" + qtd[11] + ") "+ (char)'\u00EC' +"(" + qtd[12] + ") "+ (char)'\u00F2' +"(" + qtd[13] + ") "+ (char)'\u00F9' +"(" + qtd[14] + ") "+ (char)'\u00E3' +"(" + qtd[15] + ") "+ (char)'\u00F5' +"("+ qtd[16] + ") "+ (char)'\u00E2' +"(" + qtd[17] + ") "+ (char)'\u00EA' +"(" + qtd[18] + ") "+ (char)'\u00EE' +"(" + qtd[19] + ") "+ (char)'\u00F4' +"(" + qtd[20] + ") "+ (char)'\u00FB' +"(" + qtd[21]+ ") consoante(" + qtd[22] + ") <br>(" + qtd[23] + ") <table>(" + qtd[24] + ") " + titulo);
+   }
 
+   public static void main(String[] args) {
+      String[] x = new String[100];
+      String[] fim = new String[50];
+      String[] titulo = new String[50];
+      int numEntrada = 0;
+
+      //Ler entrada
+      do {
+         x[numEntrada] = MyIO.readLine();
+      } while (isFim(x[numEntrada++]) == false);
+      numEntrada--;//Desconsiderar a palavra FIM
+
+      String html;
+
+      for (int i = 0, j = 0; i < numEntrada; i += 2, j++) {
+         titulo[j] = x[i];
+         fim[j] = x[i + 1];
+         html = Html(fim[j]);
+         Contador(html, titulo[j]);
+      }
+   }
 }
