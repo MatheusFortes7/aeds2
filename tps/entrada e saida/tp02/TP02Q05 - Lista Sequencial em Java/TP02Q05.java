@@ -13,6 +13,7 @@ class Serie {
     private int temporada;
     private int episodios;
 
+    // Contrutora vazia
     public Serie() {
         nome = "";
         formato = "";
@@ -25,6 +26,7 @@ class Serie {
         episodios = ' ';
     }
 
+    // Construtora com valor
     public Serie(String nome, String formato, String duracao, String pais, String idioma, String emissora,
             String transmissao, int temporada, int episodios) {
         this.nome = nome;
@@ -38,7 +40,7 @@ class Serie {
         this.episodios = episodios;
     }
 
-    // clone
+    // Contrutor de clone
     public Serie clone() {
         Serie temp = new Serie();
 
@@ -55,7 +57,7 @@ class Serie {
         return temp;
     }
 
-    // SET
+    // Métodos SET
     public void setNome(String nome) {
         this.nome = nome;
     }
@@ -92,7 +94,7 @@ class Serie {
         this.episodios = episodios;
     }
 
-    // GET
+    // Métodos Get
     public String getNome() {
         return nome;
     }
@@ -129,18 +131,22 @@ class Serie {
         return episodios;
     }
 
-    // Print
+    // Método Print
     public void printSerie() {
         System.out.println(this.nome + " " + this.formato + " " + this.duracao + " " + this.pais + " " + this.idioma
                 + " " + this.emissora + " " + this.transmissao + " " + this.temporada + " " + this.episodios);
     }
 
+    /*
+     * Recebe a linha especifica e remove as tags "<>" dela, pegando apenas a parte
+     * necessaria e retornando-a como String.
+     */
     public String removeTag(String line) {
         String newLine = "";
         int i = 0;
-
+        // System.out.println(line);
         while (i < line.length()) {
-
+            // Se o char for '<' ele entra em loop até achar um '>' para ignorar.
             if (line.charAt(i) == '<') {
                 i++;
                 while (line.charAt(i) != '>') {
@@ -151,49 +157,50 @@ class Serie {
                 while (line.charAt(i) != ';')
                     i++;
             } else {
+                // Quando n eh tag, ele copia os elementos para outra String
                 newLine += line.charAt(i);
             }
             i++;
         }
+        // System.out.println(newLine);
         return newLine;
     }
 
-    // pega o nome da serie
-    public String pegaNome(String entrada) {
-        String aux = "";
+    // Extrai o nome da série pela entrada
+    public String forcaNome(String entrada) {
+        String temp = "";
         for (int i = 0; i < entrada.length(); i++) {
             if (entrada.charAt(i) == '_') {
-                aux += ' ';
+                temp += ' ';
             } else {
-                aux += entrada.charAt(i);
+                temp += entrada.charAt(i);
             }
         }
-        aux = aux.substring(0, aux.length() - 5);
-        return aux;
+        temp = temp.substring(0, temp.length() - 5);
+        return temp;
     }
 
-    // pega os inteiros da String
-    public int transformaINT(String line) {
-        String aux = "";
+    // Extrai os inteiros da String
+    public int parseINT(String line) {
+        String temp = "";
 
         for (int i = 0; i < line.length(); i++) {
             if (line.charAt(i) >= '0' && line.charAt(i) <= '9') {
-                aux += line.charAt(i);
+                temp += line.charAt(i);
             } else {
                 i = line.length();
             }
         }
-        // Converte o aux para int
-        return Integer.parseInt(aux);
+        return Integer.parseInt(temp); // Converte o String temp para int resp
     }
 
-    public void ler(String entrada) {
+    public void lerSerie(String entrada) {
         String arquivo = "/tmp/series/" + entrada;
         try {
             FileReader fileReader = new FileReader(arquivo);
             BufferedReader br = new BufferedReader(fileReader);
 
-            setNome(pegaNome(entrada));
+            setNome(forcaNome(entrada));
 
             while (!br.readLine().contains("Formato"))
                 ;
@@ -221,11 +228,11 @@ class Serie {
 
             while (!br.readLine().contains("N.º de temporadas"))
                 ;
-            setTemporada(transformaINT(removeTag(br.readLine())));
+            setTemporada(parseINT(removeTag(br.readLine())));
 
             while (!br.readLine().contains("N.º de episódios"))
                 ;
-            setEpisodios(transformaINT(removeTag(br.readLine())));
+            setEpisodios(parseINT(removeTag(br.readLine())));
 
             br.close();
 
@@ -238,7 +245,7 @@ class Serie {
 
 }
 
-// lista
+// Classe de celula para lista
 class CellSerie {
 
     public Object item;
@@ -264,18 +271,20 @@ class CellSerie {
     }
 }
 
-class ListSerie {
+// Classe lista
+class ClasseLista {
     private CellSerie first;
     private CellSerie last;
     private int qt;
 
-    public ListSerie() {
+    // Metodo contrutor de classe
+    public ClasseLista() {
         first = new CellSerie();
         last = first;
         qt = 0;
     }
 
-    // GET
+    // Metodos GET
     public Object getFirst() {
         Object temp = null;
         if (first != last) {
@@ -300,7 +309,7 @@ class ListSerie {
                 ;
             resp = temp.item;
         } else {
-            MyIO.println("ERRO:" + index);
+            MyIO.println("ERRO - Get Index com indice " + index + " não permitido");
         }
         return resp;
     }
@@ -309,8 +318,8 @@ class ListSerie {
         return qt;
     }
 
-    // insercao inicio
-    public void insertStart(Object value) {
+    // Metodo de insercao no início (ATENÇÂO)
+    public void addInicio(Object value) {
         CellSerie temp = new CellSerie(value, first.next, first);
         first.next = temp;
         if (first == last) {
@@ -321,42 +330,45 @@ class ListSerie {
         qt++;
     }
 
-    // insercao no final
-    public void insertEnd(Object value) {
+    // Metodo de insercao no final
+    public void addFinal(Object value) {
         last.next = new CellSerie(value, null, last);
         last = last.next;
         qt++;
     }
 
-    // isercao no index
+    // Metodo de insercao em posicao indicada
     public void insertIndex(Object value, int index) {
         if (index == 0) {
-            this.insertStart(value);
+            this.addInicio(value);
         } else if (index == qt) {
-            this.insertEnd(value);
+            this.addFinal(value);
         } else if ((index > 0 && index < qt) && first != last) {
             CellSerie temp = first;
             for (int i = 0; i < index; i++, temp = temp.next)
                 ;
             CellSerie aux = new CellSerie(value);
+            // temp.back.next = temp.next.back = temp;
+
             aux.back = temp;
             aux.next = temp.next;
             aux.back.next = aux.next.back = aux;
             aux = temp = null;
+
             qt++;
         } else {
-            MyIO.println("ERRO:" + index);
+            MyIO.println("ERRO: Insersao com  Indice " + index + " maior que o total de objetos");
         }
     }
 
-    // print
-    public void printListSerie() {
+    // Metodo de impressao da lista
+    public void printClasseLista() {
         for (CellSerie temp = first.next; temp != last.next; temp = temp.next) {
             MyIO.println(temp.item + " ");
         }
     }
 
-    // remove first
+    // Metodo que remove o primeiro
     public Object removeStart() {
         Object temp = null;
         if (first != last) {
@@ -369,7 +381,7 @@ class ListSerie {
         return temp;
     }
 
-    // remove o ultimo
+    // Metodo que removo o ultimo
     public Object removeEnd() {
         Object temp = null;
         if (first != last) {
@@ -382,7 +394,7 @@ class ListSerie {
         return temp;
     }
 
-    // remove o index
+    // Metodo que remove a posição index
     public Object removeIndex(int index) {
         Object resp = null;
         if (index == 0) {
@@ -404,55 +416,65 @@ class ListSerie {
 
             qt--;
         } else {
-            MyIO.println("ERRO: " + index + "invalido");
+            MyIO.println("ERRO: Remocao com Index '" + index + "' invalido");
         }
         return resp;
     }
 
 }
 
+// Classe principal
 public class TP02Q05 {
-    // fim
+    // Funcao que para a leitura da entrada quando recebe FIM
     public static boolean isFim(String s) {
         return (s.length() == 3 && s.charAt(0) == 'F' && s.charAt(1) == 'I' && s.charAt(2) == 'M');
     }
 
-    public static void alterList(String entrada, Serie series, ListSerie lista) {
+    /*
+     * Funcao que realiza a insercao ou remocao a ser executada na série. Recebe a
+     * string, a serie e a lista, identifica o comando a ser utilizado e, por fim,
+     * realiza a acao.
+     */
+    public static void alteraLista(String entrada, Serie series, ClasseLista lista) {
         int temp;
         if (entrada.charAt(0) == 'I' && entrada.charAt(1) == 'I') {
-            series.ler(entrada.substring(3)); // Retira o comando
-            lista.insertStart(series);
+             // Entrada no inicio
+            series.lerSerie(entrada.substring(3)); 
+            // Retira o comando
+            lista.addInicio(series); 
+            // Insere na lista
 
-        } else if (entrada.charAt(0) == 'I' && entrada.charAt(1) == '*') {
+        } else if (entrada.charAt(0) == 'I' && entrada.charAt(1) == '*') { 
             // Entrada no valor indicado
-            if (entrada.charAt(4) == ' ') {
+            if (entrada.charAt(4) == ' ') { 
                 // Se a posicao for de apenas um digito
-                series.ler(entrada.substring(5));// Retira o comando e a posicao
+                series.lerSerie(entrada.substring(5)); 
+                // Retira o comando e a posicao
                 temp = 4;
-            } else {
+            } else { 
                 // Se a posicao possuir 2 digitos
-                series.ler(entrada.substring(6));
+                series.lerSerie(entrada.substring(6));
                 temp = 5;
             }
             lista.insertIndex(series, Integer.parseInt(entrada.substring(3, temp)));
             series = (Serie) lista.getItemAt(Integer.parseInt(entrada.substring(3, temp)));
 
-        } else if (entrada.charAt(0) == 'I' && entrada.charAt(1) == 'F') {
+        } else if (entrada.charAt(0) == 'I' && entrada.charAt(1) == 'F') { 
             // Entrada no fim
-            series.ler(entrada.substring(3));
-            lista.insertEnd(series);
+            series.lerSerie(entrada.substring(3));
+            lista.addFinal(series);
 
         } else if (entrada.charAt(0) == 'R' && entrada.charAt(1) == 'I') {
-            // Remocao no inicio
-            series = (Serie) lista.removeStart();
+             // Remocao no inicio
+            series = (Serie) lista.removeStart(); 
             // Remove da lista
-            MyIO.println("(R) " + series.getNome());
+            MyIO.println("(R) " + series.getNome()); 
             // Imprime o nome da serie removida
-        } else if (entrada.charAt(0) == 'R' && entrada.charAt(1) == '*') {
+        } else if (entrada.charAt(0) == 'R' && entrada.charAt(1) == '*') { 
             // Remocao no valor indicado
             series = (Serie) lista.removeIndex(Integer.parseInt(entrada.substring(3)));
             MyIO.println("(R) " + series.getNome());
-        } else if (entrada.charAt(0) == 'R' && entrada.charAt(1) == 'F') {
+        } else if (entrada.charAt(0) == 'R' && entrada.charAt(1) == 'F') { 
             // Remocao no fim
             series = (Serie) lista.removeEnd();
             MyIO.println("(R) " + series.getNome());
@@ -461,52 +483,40 @@ public class TP02Q05 {
 
     public static void main(String[] args) {
         String[] entrada = new String[1000];
-        Serie series = new Serie();
-        ListSerie lista = new ListSerie();
-        int aux = 0, i, stop;
+        Serie series = new Serie(); // Declaracao de serie
+        ClasseLista lista = new ClasseLista(); // Declaracao de lista
+        int n = 0, i, stop;
 
+
+        // Recebe a primeira parte da entrada
         do {
-            entrada[aux] = MyIO.readLine();
-        } while (isFim(entrada[aux++]) == false);
-
-        for (i = 0; i < (aux - 1); i++) {
-            series.ler(entrada[i]);
-            lista.insertEnd(series.clone());
+            entrada[n] = MyIO.readLine();
+        } while (isFim(entrada[n++]) == false);
+        // Salva as series na lista
+        for (i = 0; i < (n - 1); i++) {
+            series.lerSerie(entrada[i]);
+            lista.addFinal(series.clone());
         }
 
-        aux = 0;
-        stop = MyIO.readInt(); // total de alterações
+        // Recebe a segunda parte da entrada
+        n = 0;
+        stop = MyIO.readInt(); // Recebe o total de alterações a serem feitas
         do {
-            entrada[aux] = MyIO.readLine();
-            aux++;
-        } while (aux < stop);
-
-        for (i = 0; i < aux; i++) {
-            System.out.println(entrada[i]);
+            entrada[n] = MyIO.readLine();
+            n++;
+        } while (n < stop);
+        
+        // Realiza as alteracoes
+        for (i = 0; i < n; i++) {
+            alteraLista(entrada[i], series.clone(), lista);
         }
 
-        for (i = 0; i < (aux - 1); i++) {
-            series.ler(entrada[i]);
-            lista.insertEnd(series.clone());
-        }
-
-        // segunda parte
-        aux = 0;
-        stop = MyIO.readInt(); // total de alterações
-        do {
-            entrada[aux] = MyIO.readLine();
-            aux++;
-        } while (aux < stop);
-        // faxz as alteracoes
-        for (i = 0; i < aux - 1; i++) {
-            alterList(entrada[i], series.clone(), lista);
-        }
-        // imprime
-        aux = lista.getQuantity();
-        for (i = 1; i <= aux; i++) {
+        // Imprime a lista final
+        n = lista.getQuantity();
+        for (i = 1; i <= n; i++) {
             series = (Serie) lista.getItemAt(i);
             series.printSerie();
-
+            
         }
 
     }
