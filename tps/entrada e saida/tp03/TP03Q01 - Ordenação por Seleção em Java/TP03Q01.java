@@ -228,12 +228,15 @@ class Serie{
 } 
 
 class TP03Q01{
+
+    //Salvando os itens no arra nao dara certo pois so ordenara os paises, e nao a linha inteira
+    
     public static void selecionSort(String[] paises){
         for(int i = 0; i < paises.length; i++){
             String primeiro = paises[i];
             for(int j = i + 1; j < paises.length; j++){
                 if(paises[j].charAt(1) < primeiro.charAt(1)){
-                    primeiro = paises[j];
+                    primeiro = paises[j];  
                 } swap(paises, i, primeiro);
                 
             }
