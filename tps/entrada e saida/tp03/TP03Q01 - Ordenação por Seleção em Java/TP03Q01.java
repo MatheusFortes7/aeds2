@@ -1,7 +1,7 @@
 import java.io.*;
 import java.io.FileReader;
 
-class Serie{
+class Serie extends Lista{
     //declaração dos atributos
     private String name;
     private String format;
@@ -172,10 +172,9 @@ class Serie{
         return resp.substring(0, resp.length()-5); //retorno da substring resp retirando os 5 últimos caracteres relacionados à extensão do arquivo
     }
     //método para leitura do arquivo .html e tratamento das linhas
-    public void readClass(String fileName){
-        String line;
-        String resp = "";
+    public void readClass(String fileName) throws Exception{
         String file = "/tmp/series/" + fileName;
+        Lista lista = new Lista();
         try {
             FileReader fileReader = new FileReader(file); //declaração da variável fileReader que será recebida pelo bufferedReader
 
@@ -183,39 +182,48 @@ class Serie{
             
             //set nome da série
             this.name = searchName(fileName);
-            
+            lista.inserirInicio(this.name);
+
             //set Formato da série
             while(!br.readLine().contains("Formato"));
             this.format = removeTags(br.readLine());
+            lista.inserirFim(this.format);
 
             //set duração da série
             while(!br.readLine().contains("Duração"));
             this.duration = removeTags(br.readLine());
+            lista.inserirFim(this.duration);
 
             //set país da série
             while(!br.readLine().contains("País de origem"));
             this.country = removeTags(br.readLine());
+            lista.inserirFim(this.country);
 
             //set idioma da série
             while(!br.readLine().contains("Idioma original"));
             this.language = removeTags(br.readLine());
+            lista.inserirFim(this.language);
 
             //set emissora da série
             while(!br.readLine().contains("Emissora de televisão"));
             this.broadcaster = removeTags(br.readLine());
+            lista.inserirFim(this.broadcaster);
 
             //set transmissão original da série
             while(!br.readLine().contains("Transmissão original"));
             this.streaming = removeTags(br.readLine());
+            lista.inserirFim(this.streaming);
 
             //set temporadas da série
             while(!br.readLine().contains("N.º de temporadas"));
             this.seasons = justInt(removeTags(br.readLine()));
+            
 
             //set episódios da série
             while(!br.readLine().contains("N.º de episódios"));
             this.episodes = justInt(removeTags(br.readLine()));
             
+
             //fechamento do bufferedReader
             br.close();         
         //Tratamento de exceções
@@ -224,45 +232,227 @@ class Serie{
         } catch(IOException e) {
             System.out.println("Error reading file '" + fileName + "'");
         }
+        
     }
 } 
+
+class Lista {
+    private String[] array;
+    private int n;
+ 
+ 
+    /**
+     * Construtor da classe.
+     */
+    public Lista () {
+       this(8);
+    }
+ 
+ 
+    /**
+     * Construtor da classe.
+     * @param tamanho Tamanho da lista.
+     */
+    public Lista (int tamanho){
+       array = new String[tamanho];
+       n = 0;
+    }
+ 
+ 
+    /**
+     * Insere um elemento na primeira posicao da lista e move os demais
+     * elementos para o fim da lista.
+     * @param x int elemento a ser inserido.
+     * @throws Exception Se a lista estiver cheia.
+     */
+    public void inserirInicio(String x) throws Exception {
+ 
+       //validar insercao
+       if(n >= array.length){
+          throw new Exception("Erro ao inserir!");
+       } 
+ 
+       //levar elementos para o fim do array
+       for(int i = n; i > 0; i--){
+          array[i] = array[i-1];
+       }
+ 
+       array[0] = x;
+       n++;
+    }
+ 
+ 
+    /**
+     * Insere um elemento na ultima posicao da lista.
+     * @param x int elemento a ser inserido.
+     * @throws Exception Se a lista estiver cheia.
+     */
+    public void inserirFim(String x) throws Exception {
+ 
+       //validar insercao
+       if(n >= array.length){
+          throw new Exception("Erro ao inserir!");
+       }
+ 
+       array[n] = x;
+       n++;
+    }
+ 
+ 
+    /**
+     * Insere um elemento em uma posicao especifica e move os demais
+     * elementos para o fim da lista.
+     * @param x int elemento a ser inserido.
+     * @param pos Posicao de insercao.
+     * @throws Exception Se a lista estiver cheia ou a posicao invalida.
+     */
+    public void inserir(String x, int pos) throws Exception {
+ 
+       //validar insercao
+       if(n >= array.length || pos < 0 || pos > n){
+          throw new Exception("Erro ao inserir!");
+       }
+ 
+       //levar elementos para o fim do array
+       for(int i = n; i > pos; i--){
+          array[i] = array[i-1];
+       }
+ 
+       array[pos] = x;
+       n++;
+    }
+ 
+ 
+    /**
+     * Remove um elemento da primeira posicao da lista e movimenta 
+     * os demais elementos para o inicio da mesma.
+     * @return resp int elemento a ser removido.
+     * @throws Exception Se a lista estiver vazia.
+     */
+    public String removerInicio() throws Exception {
+ 
+       //validar remocao
+       if (n == 0) {
+          throw new Exception("Erro ao remover!");
+       }
+ 
+       String resp = array[0];
+       n--;
+ 
+       for(int i = 0; i < n; i++){
+          array[i] = array[i+1];
+       }
+ 
+       return resp;
+    }
+ 
+ 
+    /**
+     * Remove um elemento da ultima posicao da lista.
+     * @return resp int elemento a ser removido.
+     * @throws Exception Se a lista estiver vazia.
+     */
+    public String removerFim() throws Exception {
+ 
+       //validar remocao
+       if (n == 0) {
+          throw new Exception("Erro ao remover!");
+       }
+ 
+       return array[--n];
+    }
+ 
+ 
+    /**
+     * Remove um elemento de uma posicao especifica da lista e 
+     * movimenta os demais elementos para o inicio da mesma.
+     * @param pos Posicao de remocao.
+     * @return resp int elemento a ser removido.
+     * @throws Exception Se a lista estiver vazia ou a posicao for invalida.
+     */
+    public String remover(int pos) throws Exception {
+ 
+       //validar remocao
+       if (n == 0 || pos < 0 || pos >= n) {
+          throw new Exception("Erro ao remover!");
+       }
+ 
+       String resp = array[pos];
+       n--;
+ 
+       for(int i = pos; i < n; i++){
+          array[i] = array[i+1];
+       }
+ 
+       return resp;
+    }
+ 
+ 
+    /**
+     * Mostra os elementos da lista separados por espacos.
+     */
+    public void mostrar (){
+       System.out.print("[ ");
+       for(int i = 0; i < n; i++){
+          System.out.print(array[i] + " ");
+       }
+       System.out.println("]");
+    }
+ 
+ 
+    /**
+     * Procura um elemento e retorna se ele existe.
+     * @param x int elemento a ser pesquisado.
+     * @return <code>true</code> se o array existir,
+     * <code>false</code> em caso contrario.
+     */
+    public boolean pesquisar(String x) {
+       boolean retorno = false;
+       for (int i = 0; i < n && retorno == false; i++) {
+          retorno = (array[i] == x);
+       }
+       return retorno;
+    }
+ }
 
 class TP03Q01{
 
     //Salvando os itens no arra nao dara certo pois so ordenara os paises, e nao a linha inteira
     
-    public static void selecionSort(String[] paises){
-        for(int i = 0; i < paises.length; i++){
-            String primeiro = paises[i];
-            for(int j = i + 1; j < paises.length; j++){
-                if(paises[j].charAt(1) < primeiro.charAt(1)){
-                    primeiro = paises[j];  
-                } swap(paises, i, primeiro);
-                
-            }
-        }
-    }
+    //public void SelectionSort(int[] array) {
+    //    int n =  0;
+    //    for (int i = 0; i < (n - 1); i++) {
+    //       int menor = i;
+    //       for (int j = (i + 1); j < n; j++){
+    //          if (array[menor] > array[j]){
+    //             menor = j;
+    //          }
+    //       }
+    //       swap(menor, i);
+    //    }
+    // }
 
-    public static void swap(String[] paises, int i, String primeiro){
-        String aux = paises[i];
-        paises[i] = primeiro;
-        primeiro = aux;
-    } 
+    //public static void swap(int i, int primeiro){
+    //    int aux = array[i];
+    //    array[i] = primeiro;
+    //    primeiro = aux;
+    //} 
 
     public static boolean isFim(String s) {
         return(s.length() == 3 && s.charAt(0) == 'F' && s.charAt(1) == 'I' && s.charAt(2) == 'M');
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         Serie serie = new Serie();
         String[] input = new String[1000];
+        Lista lista = new Lista();
         int numInput = 0;
 
         do{
             input[numInput] = MyIO.readLine();
         }while(isFim(input[numInput++]) == false);
         numInput--;//Desconsiderar a palavra FIM
-
+        
 
         for(int i = 0; i < numInput;i++){
             try{
