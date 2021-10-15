@@ -174,7 +174,6 @@ class Serie extends Lista{
     //método para leitura do arquivo .html e tratamento das linhas
     public void readClass(String fileName) throws Exception{
         String file = "/tmp/series/" + fileName;
-        Lista lista = new Lista();
         try {
             FileReader fileReader = new FileReader(file); //declaração da variável fileReader que será recebida pelo bufferedReader
 
@@ -182,37 +181,36 @@ class Serie extends Lista{
             
             //set nome da série
             this.name = searchName(fileName);
-            lista.inserirInicio(this.name);
+            
 
             //set Formato da série
             while(!br.readLine().contains("Formato"));
             this.format = removeTags(br.readLine());
-            lista.inserirFim(this.format);
+            
 
             //set duração da série
             while(!br.readLine().contains("Duração"));
             this.duration = removeTags(br.readLine());
-            lista.inserirFim(this.duration);
+            
 
             //set país da série
             while(!br.readLine().contains("País de origem"));
-            this.country = removeTags(br.readLine());
-            lista.inserirFim(this.country);
+            this.country = removeTags(br.readLine()).trim();
 
             //set idioma da série
             while(!br.readLine().contains("Idioma original"));
             this.language = removeTags(br.readLine());
-            lista.inserirFim(this.language);
+            
 
             //set emissora da série
             while(!br.readLine().contains("Emissora de televisão"));
             this.broadcaster = removeTags(br.readLine());
-            lista.inserirFim(this.broadcaster);
+            
 
             //set transmissão original da série
             while(!br.readLine().contains("Transmissão original"));
             this.streaming = removeTags(br.readLine());
-            lista.inserirFim(this.streaming);
+            
 
             //set temporadas da série
             while(!br.readLine().contains("N.º de temporadas"));
@@ -223,7 +221,7 @@ class Serie extends Lista{
             while(!br.readLine().contains("N.º de episódios"));
             this.episodes = justInt(removeTags(br.readLine()));
             
-
+            
             //fechamento do bufferedReader
             br.close();         
         //Tratamento de exceções
@@ -237,7 +235,7 @@ class Serie extends Lista{
 } 
 
 class Lista {
-    private String[] array;
+    private Serie[] array;
     private int n;
  
  
@@ -245,7 +243,7 @@ class Lista {
      * Construtor da classe.
      */
     public Lista () {
-       this(8);
+       this(70);
     }
  
  
@@ -254,7 +252,7 @@ class Lista {
      * @param tamanho Tamanho da lista.
      */
     public Lista (int tamanho){
-       array = new String[tamanho];
+       array = new Serie[tamanho];
        n = 0;
     }
  
@@ -265,7 +263,7 @@ class Lista {
      * @param x int elemento a ser inserido.
      * @throws Exception Se a lista estiver cheia.
      */
-    public void inserirInicio(String x) throws Exception {
+    public void inserirInicio(Serie x) throws Exception {
  
        //validar insercao
        if(n >= array.length){
@@ -287,7 +285,7 @@ class Lista {
      * @param x int elemento a ser inserido.
      * @throws Exception Se a lista estiver cheia.
      */
-    public void inserirFim(String x) throws Exception {
+    public void inserirFim(Serie x) throws Exception {
  
        //validar insercao
        if(n >= array.length){
@@ -306,7 +304,7 @@ class Lista {
      * @param pos Posicao de insercao.
      * @throws Exception Se a lista estiver cheia ou a posicao invalida.
      */
-    public void inserir(String x, int pos) throws Exception {
+    public void inserir(Serie x, int pos) throws Exception {
  
        //validar insercao
        if(n >= array.length || pos < 0 || pos > n){
@@ -329,14 +327,14 @@ class Lista {
      * @return resp int elemento a ser removido.
      * @throws Exception Se a lista estiver vazia.
      */
-    public String removerInicio() throws Exception {
+    public Serie removerInicio() throws Exception {
  
        //validar remocao
        if (n == 0) {
           throw new Exception("Erro ao remover!");
        }
  
-       String resp = array[0];
+       Serie resp = array[0];
        n--;
  
        for(int i = 0; i < n; i++){
@@ -352,7 +350,7 @@ class Lista {
      * @return resp int elemento a ser removido.
      * @throws Exception Se a lista estiver vazia.
      */
-    public String removerFim() throws Exception {
+    public Serie removerFim() throws Exception {
  
        //validar remocao
        if (n == 0) {
@@ -370,14 +368,14 @@ class Lista {
      * @return resp int elemento a ser removido.
      * @throws Exception Se a lista estiver vazia ou a posicao for invalida.
      */
-    public String remover(int pos) throws Exception {
+    public Serie remover(int pos) throws Exception {
  
        //validar remocao
        if (n == 0 || pos < 0 || pos >= n) {
           throw new Exception("Erro ao remover!");
        }
  
-       String resp = array[pos];
+       Serie resp = array[pos];
        n--;
  
        for(int i = pos; i < n; i++){
@@ -394,7 +392,7 @@ class Lista {
     public void mostrar (){
        System.out.print("[ ");
        for(int i = 0; i < n; i++){
-          System.out.print(array[i] + " ");
+          array[i].printClass();
        }
        System.out.println("]");
     }
@@ -406,37 +404,44 @@ class Lista {
      * @return <code>true</code> se o array existir,
      * <code>false</code> em caso contrario.
      */
-    public boolean pesquisar(String x) {
+    public boolean pesquisar(Serie x) {
        boolean retorno = false;
        for (int i = 0; i < n && retorno == false; i++) {
           retorno = (array[i] == x);
        }
        return retorno;
     }
+
+    public void SelectionSort() {
+        for (int i = 0; i < (n - 1); i++) {
+           int menor = i;
+           for (int j = (i + 1); j < n; j++){
+              if (array[menor].getCountry().compareTo(array[j].getCountry()) > 0 ){ 
+                 menor = j;
+              } else if(array[menor].getCountry().compareTo(array[j].getCountry()) == 0 ){
+                //troca o nome em ordem alfabetica
+              }
+           }
+           swap(menor, i);
+        }
+     }
+
+    public void swap(int i, int primeiro){
+        Serie aux = array[i];
+        array[i] = array[primeiro];
+        array[primeiro] = aux;
+    } 
+
+
+    // 0  strings iguals
+    // > 0 Tem  letra 
  }
 
 class TP03Q01{
 
     //Salvando os itens no arra nao dara certo pois so ordenara os paises, e nao a linha inteira
     
-    //public void SelectionSort(int[] array) {
-    //    int n =  0;
-    //    for (int i = 0; i < (n - 1); i++) {
-    //       int menor = i;
-    //       for (int j = (i + 1); j < n; j++){
-    //          if (array[menor] > array[j]){
-    //             menor = j;
-    //          }
-    //       }
-    //       swap(menor, i);
-    //    }
-    // }
-
-    //public static void swap(int i, int primeiro){
-    //    int aux = array[i];
-    //    array[i] = primeiro;
-    //    primeiro = aux;
-    //} 
+    
 
     public static boolean isFim(String s) {
         return(s.length() == 3 && s.charAt(0) == 'F' && s.charAt(1) == 'I' && s.charAt(2) == 'M');
@@ -456,10 +461,20 @@ class TP03Q01{
 
         for(int i = 0; i < numInput;i++){
             try{
-                serie.readClass("/tmp/series/"+input[i]);
+                serie = new Serie();
+                serie.readClass(input[i]);
+                //serie.printClass();
+                lista.inserirFim(serie); 
             }catch(Exception e){
             }
-            serie.printClass();
         }
+        lista.mostrar();
+        System.out.println("----------------");
+        System.out.println("ordenado");
+        System.out.println("----------------");
+        lista.SelectionSort();
+        lista.mostrar();
+
+
     }
 }
