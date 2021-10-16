@@ -185,12 +185,12 @@ class Serie extends Lista{
 
             //set Formato da série
             while(!br.readLine().contains("Formato"));
-            this.format = removeTags(br.readLine());
+            this.format = removeTags(br.readLine()).trim();
             
 
             //set duração da série
             while(!br.readLine().contains("Duração"));
-            this.duration = removeTags(br.readLine());
+            this.duration = removeTags(br.readLine()).trim();
             
 
             //set país da série
@@ -199,17 +199,17 @@ class Serie extends Lista{
 
             //set idioma da série
             while(!br.readLine().contains("Idioma original"));
-            this.language = removeTags(br.readLine());
+            this.language = removeTags(br.readLine()).trim();
             
 
             //set emissora da série
             while(!br.readLine().contains("Emissora de televisão"));
-            this.broadcaster = removeTags(br.readLine());
+            this.broadcaster = removeTags(br.readLine()).trim();
             
 
             //set transmissão original da série
             while(!br.readLine().contains("Transmissão original"));
-            this.streaming = removeTags(br.readLine());
+            this.streaming = removeTags(br.readLine()).trim();
             
 
             //set temporadas da série
@@ -390,11 +390,11 @@ class Lista {
      * Mostra os elementos da lista separados por espacos.
      */
     public void mostrar (){
-       System.out.print("[ ");
+       //System.out.print("[ ");
        for(int i = 0; i < n; i++){
           array[i].printClass();
        }
-       System.out.println("]");
+       //System.out.println("]");
     }
  
  
@@ -419,7 +419,9 @@ class Lista {
               if (array[menor].getCountry().compareTo(array[j].getCountry()) > 0 ){ 
                  menor = j;
               } else if(array[menor].getCountry().compareTo(array[j].getCountry()) == 0 ){
-                //troca o nome em ordem alfabetica
+                if(array[menor].getName().compareTo(array[j].getName()) > 0){
+                    menor = j;
+                }
               }
            }
            swap(menor, i);
@@ -468,10 +470,10 @@ class TP03Q01{
             }catch(Exception e){
             }
         }
-        lista.mostrar();
-        System.out.println("----------------");
-        System.out.println("ordenado");
-        System.out.println("----------------");
+        //lista.mostrar();
+        //System.out.println("----------------");
+        //System.out.println("ordenado");
+        //System.out.println("----------------");
         lista.SelectionSort();
         lista.mostrar();
 
