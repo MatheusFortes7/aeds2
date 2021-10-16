@@ -411,7 +411,7 @@ class TP03Q05{
             criaHeap();
         }
         for(int i = n - 1; i >= 1; i--){
-            String aux = paises[0];
+            Serie aux = paises[0];
             paises[0] = paises[i];
             paises[i] = aux;
             criaHeap();
@@ -419,7 +419,7 @@ class TP03Q05{
     }
 
     public static void criaHeap(){
-        String aux = paises[i];
+        Serie aux = paises[i];
         int j = i * 2 + 1;
         while(j <= n){
             if(j < n){
