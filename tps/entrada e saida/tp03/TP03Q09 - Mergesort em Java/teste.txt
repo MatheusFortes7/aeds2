@@ -1,0 +1,122 @@
+Unable to open file '/tmp/series/13_Reasons_Why.html'
+       0 0
+Unable to open file '/tmp/series/Daredevil.html'
+       0 0
+Unable to open file '/tmp/series/Scorpion.html'
+       0 0
+Unable to open file '/tmp/series/Sense8.html'
+       0 0
+Unable to open file '/tmp/series/Sherlock.html'
+       0 0
+Unable to open file '/tmp/series/Stranger_Things.html'
+       0 0
+Unable to open file '/tmp/series/Suits.html'
+       0 0
+Unable to open file '/tmp/series/Supernatural.html'
+       0 0
+Unable to open file '/tmp/series/Teen Wolf.html'
+       0 0
+Unable to open file '/tmp/series/The 100.html'
+       0 0
+Unable to open file '/tmp/series/The Flash.html'
+       0 0
+Unable to open file '/tmp/series/The Ranch.html'
+       0 0
+Unable to open file '/tmp/series/Dexter.html'
+       0 0
+Unable to open file '/tmp/series/Doctor_Who.html'
+       0 0
+Unable to open file '/tmp/series/Downton_Abbey.html'
+       0 0
+Unable to open file '/tmp/series/Everybody_Hates_Chris.html'
+       0 0
+Unable to open file '/tmp/series/Forever.html'
+       0 0
+Unable to open file '/tmp/series/24.html'
+       0 0
+Unable to open file '/tmp/series/American_Horror_Story.html'
+       0 0
+Unable to open file '/tmp/series/Anne.html'
+       0 0
+Unable to open file '/tmp/series/Arrow.html'
+       0 0
+Unable to open file '/tmp/series/Black_Mirror.html'
+       0 0
+Unable to open file '/tmp/series/Blindspot.html'
+       0 0
+Unable to open file '/tmp/series/Breaking_Bad.html'
+       0 0
+Unable to open file '/tmp/series/Os_Simpsons.html'
+       0 0
+Unable to open file '/tmp/series/Outlander.html'
+       0 0
+Unable to open file '/tmp/series/Penny_Dreadful.html'
+       0 0
+Unable to open file '/tmp/series/Gotham.html'
+       0 0
+Unable to open file '/tmp/series/Grey's_Anatomy.html'
+       0 0
+Unable to open file '/tmp/series/Orphan_Black.html'
+       0 0
+Unable to open file '/tmp/series/The Walking Dead.html'
+       0 0
+Unable to open file '/tmp/series/The_4400.html'
+       0 0
+Unable to open file '/tmp/series/The_Big_Bang_Theory.html'
+       0 0
+Unable to open file '/tmp/series/The_Fresh_Prince_of_Bel-Air.html'
+       0 0
+Unable to open file '/tmp/series/Grimm.html'
+       0 0
+Unable to open file '/tmp/series/House_of_Cards_.html'
+       0 0
+Unable to open file '/tmp/series/How to Get Away with Murder.html'
+       0 0
+Unable to open file '/tmp/series/How_I_Met_Your_Mother.html'
+       0 0
+Unable to open file '/tmp/series/Jessica_Jones.html'
+       0 0
+Unable to open file '/tmp/series/Pretty_Little_Liars.html'
+       0 0
+Unable to open file '/tmp/series/Prison_Break.html'
+       0 0
+Unable to open file '/tmp/series/Reign.html'
+       0 0
+Unable to open file '/tmp/series/Castle.html'
+       0 0
+Unable to open file '/tmp/series/Criminal_Minds.html'
+       0 0
+Unable to open file '/tmp/series/Smallville.html'
+       0 0
+Unable to open file '/tmp/series/Sons of Anarchy.html'
+       0 0
+Unable to open file '/tmp/series/Friends.html'
+       0 0
+Unable to open file '/tmp/series/Game_of_Thrones.html'
+       0 0
+Unable to open file '/tmp/series/Gossip_Girl.html'
+       0 0
+Unable to open file '/tmp/series/Lucifer.html'
+       0 0
+Unable to open file '/tmp/series/My_Wife_and_Kids.html'
+       0 0
+Unable to open file '/tmp/series/Narcos.html'
+       0 0
+Unable to open file '/tmp/series/Once_Upon_a_Time_.html'
+       0 0
+Unable to open file '/tmp/series/Orange_Is_the_New_Black.html'
+       0 0
+Unable to open file '/tmp/series/The_Originals.html'
+       0 0
+Unable to open file '/tmp/series/The_Vampire_Diaries.html'
+       0 0
+Unable to open file '/tmp/series/True Detective.html'
+       0 0
+Unable to open file '/tmp/series/Under_the_Dome.html'
+       0 0
+Unable to open file '/tmp/series/Vikings.html'
+       0 0
+Unable to open file '/tmp/series/Westworld.html'
+       0 0
+Unable to open file '/tmp/series/White Collar.html'
+       0 0

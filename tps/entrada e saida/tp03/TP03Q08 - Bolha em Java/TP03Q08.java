@@ -413,21 +413,23 @@ class Lista {
     }
 
     //codigo bubblesort para int
-    public void bubbleSort(){
-        int continua = 0, aux; 
-        int fim = n;  //n == tamanho vetor
-        do{
-            for(int i = 0; i < fim - 1; i++){
-                if(array[i].getSeasons() > array[i+1].getSeasons()){
-                    aux = array[i].getSeasons();
-                    array[i] = array[i+1];
-                    array[i+1] = aux;
-                    continua = i;
-                }
-            }
-            fim--;
-        }while(continua != 0);
-    }
+    public void bubbleSort() {
+		for (int i = (n - 1); i > 0; i--) {
+			for (int j = 0; j < i; j++) {
+				if (array[j].getSeasons() > array[j + 1].getSeasons()) {
+                    swap(j, j+1);
+				}
+			}
+		}
+   }
+
+   public void swap(int i, int primeiro){
+    Serie aux = array[i];
+    array[i] = array[primeiro];
+    array[primeiro] = aux;
+} 
+
+    //FALTA ORDENAR POR NOME
 
 
     // 0  strings iguals
