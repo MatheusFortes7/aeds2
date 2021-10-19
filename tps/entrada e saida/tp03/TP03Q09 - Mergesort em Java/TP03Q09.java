@@ -458,7 +458,7 @@ class Lista {
         }
   
         //Sentinela no final dos dois arrays
-        a1[i] = a2[j] = 0x7FFFFFFF;  //QUE PORRA E ESSA
+        a1[i] = a2[j] = 0x7FFFFFFF;  
   
         //Intercalacao propriamente dita
         for(i = j = 0, k = esq; k <= dir; k++){
@@ -473,7 +473,7 @@ class Lista {
     // > 0 Tem  letra 
  }
 
-class TP03Q08{
+class TP03Q09{
 
     //Salvando os itens no arra nao dara certo pois so ordenara os paises, e nao a linha inteira
     

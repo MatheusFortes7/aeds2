@@ -454,11 +454,13 @@ class Lista {
             while ((j >= 0) && (array[j].getLanguage().compareTo(tmp.getLanguage()) > 0)) {
                 array[j + 1] = array[j];
                 j--;
+                while ((j >= 0) && (array[j].getName().compareTo(tmp.getName()) > 0)) {
+                    array[j + 1] = array[j];
+                    j--;
+                }
+                
             } 
-            while ((j >= 0) && (array[j].getName().compareTo(tmp.getName()) > 0)) {
-                array[j + 1] = array[j];
-                j--;
-            } 
+            
 
             array[j + 1] = tmp;
         }
