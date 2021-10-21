@@ -438,6 +438,10 @@ class Lista {
       * @param int dir fim do array a ser ordenado
       */ 
      public void intercalar(int esq, int meio, int dir){
+        Serie sentinela = new Serie();
+
+        sentinela.setEpisodes(0x7FFFFFFF);;
+        
         int n1, n2, i, j, k;
   
         //Definir tamanho dos dois subarrays
@@ -458,11 +462,11 @@ class Lista {
         }
   
         //Sentinela no final dos dois arrays
-        a1[i] = a2[j] = 0x7FFFFFFF;  
+        a1[i] = a2[j] = sentinela;  
   
         //Intercalacao propriamente dita
         for(i = j = 0, k = esq; k <= dir; k++){
-           array[k] = (a1[i].getEpisodes() <= a2[j].getEpisodes()) ? a1[i++] : a2[j++];
+           array[k] = (a1[i].getEpisodes() < a2[j].getEpisodes()    ) ? a1[i++] : a2[j++];
         }
      }
 

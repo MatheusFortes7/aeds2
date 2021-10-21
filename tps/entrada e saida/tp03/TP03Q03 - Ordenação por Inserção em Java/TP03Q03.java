@@ -447,6 +447,29 @@ class Lista {
         return retorno;
     }
 
+    /*public void InsertionSort1() {
+
+        for (int i = 1; i < n; i++) {
+
+            Serie tmp = array[i];
+
+            int j = i - 1;
+
+            while ((j >= 0) && ((array[j].getLanguage().compareTo(tmp.getLanguage()) > 0)
+                    || ((array[j].getLanguage().compareTo(tmp.getLanguage()) == 0)
+                            && (array[j].getName().compareTo(tmp.getName()) > 0)))) {
+
+                array[j + 1] = array[j];
+
+                j--;
+
+            }
+
+            array[j + 1] = tmp;
+
+        }
+
+    } */// fzr comparacao se a o idioma for igual
     public void InsertionSort1() {
         for (int i = 1; i < n; i++) {
             Serie tmp = array[i];
@@ -454,27 +477,19 @@ class Lista {
             while ((j >= 0) && (array[j].getLanguage().compareTo(tmp.getLanguage()) > 0)) {
                 array[j + 1] = array[j];
                 j--;
-                while ((j >= 0) && (array[j].getName().compareTo(tmp.getName()) > 0)) {
-                    array[j + 1] = array[j];
-                    j--;
-                }
-                
             } 
-            
+            while ((j >= 0) && (array[j].getLanguage().compareTo(tmp.getLanguage()) == 0) && (array[j].getName().compareTo(tmp.getName()) > 0)) {
+                array[j + 1] = array[j];
+                j--;
+            } 
 
             array[j + 1] = tmp;
         }
 
-    } // fzr comparacao se a o idioma for igual
-
- 
+    }
 }
 
 class TP03Q03 {
-
-    // Salvando os itens no arra nao dara certo pois so ordenara os paises, e nao a
-    // linha inteira
-
     public static boolean isFim(String s) {
         return (s.length() == 3 && s.charAt(0) == 'F' && s.charAt(1) == 'I' && s.charAt(2) == 'M');
     }
@@ -503,6 +518,7 @@ class TP03Q03 {
         // System.out.println("----------------");
         // System.out.println("ordenado");
         // System.out.println("----------------");
+
         lista.InsertionSort1();
         lista.mostrar();
 

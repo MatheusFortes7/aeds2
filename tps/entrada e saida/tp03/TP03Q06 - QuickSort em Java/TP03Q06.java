@@ -457,14 +457,15 @@ class Lista {
      * @param int esq inicio do array a ser ordenado
      * @param int dir fim do array a ser ordenado
      */
-    private void quicksort(int esq, int dir) {      //ORDENANDO SSSOMENTE CANADA
+    private void quicksort(int esq, int dir) {      
         int i = esq, j = dir;
         Serie pivo = array[(dir + esq) / 2];
         while (i <= j) {
-            while (array[i].getCountry().compareTo(pivo.getCountry()) < 0)
+            while ((array[i].getCountry().compareTo(pivo.getCountry()) < 0) || ((array[i].getCountry().compareTo(pivo.getCountry()) == 0) && (array[i].getName().compareTo(pivo.getName()) < 0)))
                 i++;
-            while (array[j].getCountry().compareTo(pivo.getCountry()) > 0)
+            while ((array[j].getCountry().compareTo(pivo.getCountry()) > 0) || ((array[j].getCountry().compareTo(pivo.getCountry()) == 0) && (array[j].getName().compareTo(pivo.getName()) > 0)))
                 j--;
+            
             if (i <= j) {
                 swap(i, j);
                 i++;
@@ -476,21 +477,7 @@ class Lista {
         if (i < dir)
             quicksort(i, dir);
         
-            while (i <= j) {
-            while (array[i].getCountry().compareTo(pivo.getCountry()) < 0)
-                i++;
-            while (array[j].getCountry().compareTo(pivo.getCountry()) > 0)
-                j--;
-            if (i <= j) {
-                swap(i, j);
-                i++;
-                j--;
-            }
-        }
-        if (esq < j)
-            quicksort(esq, j);
-        if (i < dir)
-            quicksort(i, dir);
+        
     }
 
     public void swap(int i, int primeiro) {

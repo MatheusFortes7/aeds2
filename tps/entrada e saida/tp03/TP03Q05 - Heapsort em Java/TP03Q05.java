@@ -476,14 +476,14 @@ class Lista {
     }
 
     public void construir(int tamHeap) {
-        for (int i = tamHeap; i > 1 && array[i].getFormat().compareTo(array[i / 2].getFormat()) > 0; i /= 2) {
+        for (int i = tamHeap; i > 1 && array[i].getFormat().compareTo(array[i / 2].getFormat()) > 0; i /= 2) {  //colocar umm ou aqui
             swap(i, i / 2);
         }
         
-        //for (int i = tamHeap; i > 1 && array[i].getFormat().compareTo(array[i / 2].getFormat()) == 0; i /= 2) {
-        //    if(array[i].getName().compareTo(array[i/2].getName()) > 0)
-        //    swap(i, i / 2);
-        //}
+        /*for (int i = tamHeap; i > 1 && array[i].getFormat().compareTo(array[i / 2].getFormat()) == 0; i /= 2) {
+            if(array[i].getName().compareTo(array[i/2].getName()) > 0)
+            swap(i, i / 2);
+        }*/
     }
 
     public void reconstruir(int tamHeap) {
