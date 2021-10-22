@@ -476,14 +476,9 @@ class Lista {
     }
 
     public void construir(int tamHeap) {
-        for (int i = tamHeap; i > 1 && array[i].getFormat().compareTo(array[i / 2].getFormat()) > 0; i /= 2) {  //colocar umm ou aqui
+        for (int i = tamHeap; i > 1 && ((array[i].getFormat().compareTo(array[i / 2].getFormat()) > 0) || ((array[i].getFormat().compareTo(array[i / 2].getFormat()) == 0)&& (array[i].getName().compareTo(array[i / 2].getName()) > 0))); i /= 2) { 
             swap(i, i / 2);
         }
-        
-        /*for (int i = tamHeap; i > 1 && array[i].getFormat().compareTo(array[i / 2].getFormat()) == 0; i /= 2) {
-            if(array[i].getName().compareTo(array[i/2].getName()) > 0)
-            swap(i, i / 2);
-        }*/
     }
 
     public void reconstruir(int tamHeap) {
@@ -491,6 +486,9 @@ class Lista {
         while (i <= (tamHeap / 2)) {
             int filho = getMaiorFilho(i, tamHeap);
             if (array[i].getFormat().compareTo(array[filho].getFormat()) < 0) {
+                swap(i, filho);
+                i = filho;
+            } else if(array[i].getFormat().compareTo(array[filho].getFormat()) == 0 && array[i].getName().compareTo(array[filho].getName()) < 0){
                 swap(i, filho);
                 i = filho;
             } else {
@@ -502,6 +500,8 @@ class Lista {
     public int getMaiorFilho(int i, int tamHeap) {
         int filho;
         if (2 * i == tamHeap || array[2 * i].getFormat().compareTo(array[2 * i + 1].getFormat()) > 0) {
+            filho = 2 * i;
+        } else if(2 * i == tamHeap || (array[2*i].getFormat().compareTo(array[2*i+1].getFormat()) == 0 && array[2*i].getName().compareTo(array[2*i+1].getName()) > 0)){
             filho = 2 * i;
         } else {
             filho = 2 * i + 1;

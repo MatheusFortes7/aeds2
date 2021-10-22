@@ -419,6 +419,9 @@ class Lista {
 				if (array[j].getSeasons() > array[j + 1].getSeasons()) { //colocar um ou aqui
                     swap(j, j+1);
 				}
+                if ((array[j].getSeasons() == array[j + 1].getSeasons()) && (array[j].getName().compareTo(array[j+1].getName()) > 0)) { //colocar um ou aqui
+                    swap(j, j+1);
+				}
 			}
 		}
    }
