@@ -412,8 +412,16 @@ class Lista {
        return retorno;
     }
 
-    //codigo bubblesort para int
+    //cdigo de ordenacao
     
+
+   public void swap(int i, int primeiro){
+    Serie aux = array[i];
+    array[i] = array[primeiro];
+    array[primeiro] = aux;
+} 
+
+    //FALTA ORDENAR POR NOME
 
 
     // 0  strings iguals
@@ -455,7 +463,7 @@ class TP03Q10{
         //System.out.println("----------------");
         //System.out.println("ordenado");
         //System.out.println("----------------");
-        lista.sort();
+        lista.bubbleSort();
         lista.mostrar();
 
 
