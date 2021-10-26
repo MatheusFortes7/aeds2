@@ -1,3 +1,5 @@
+import javax.swing.plaf.synth.SynthDesktopIconUI;
+
 /**
  * Principal para Arvore Binaria de Pesquisa
  * @author Max do Val Machado
@@ -5,7 +7,7 @@
 public class Principal {
    public static void main(String[] args) throws Exception {
       ArvoreBinaria arvoreBinaria = new ArvoreBinaria();
-
+      /*
       arvoreBinaria.inserir(3);
       arvoreBinaria.inserir(5);
       arvoreBinaria.inserir(1);
@@ -29,6 +31,20 @@ public class Principal {
 
       arvoreBinaria.caminharCentral();
       arvoreBinaria.caminharPre();
+      arvoreBinaria.caminharPos();*/
+
+      for (int i = 0; i <= 30; i++) {
+         arvoreBinaria.inserir(i);
+         System.out.println("Numero de nos = " + );
+         System.out.println("Altura = " + arvoreBinaria.getAltura());
+         
+      }
+
+
+
+      arvoreBinaria.caminharCentral();
+      arvoreBinaria.caminharPre();
       arvoreBinaria.caminharPos();
+
    }
 }

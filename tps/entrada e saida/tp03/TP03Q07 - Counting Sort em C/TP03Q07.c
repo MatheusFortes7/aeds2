@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "countingsort.h"
+
 
 #define MAX_FIELD_SIZE 100
 //CLASSE SERIE
@@ -162,7 +162,7 @@ int isFim(char line[]) {
 }
 
 //==================================LISTA============================================
-#define MAXTAM    6
+#define MAXTAM    70
 #define bool      short
 #define true      1
 #define false     0
@@ -309,14 +309,20 @@ Serie remover(int pos) {
 /**
  * Mostra os array separados por espacos.
  */
-void mostrar (){
-   printf("[ ");
-
-   for(int i = 0; i < n; i++){
-      printf("%s", array[i]);  //ERRO AQUI======================================================================================================================================================================================================================
+void mostrar()
+{
+   for (int i = 0; i < n; i++){
+      printf("%s %s %s %s %s %s %s %d %d\n",
+             array[i].nome,
+             array[i].formato,
+             array[i].duracao,
+             array[i].pais,
+             array[i].idioma,
+             array[i].emissora,
+             array[i].transmissao,
+             array[i].num_temporadas,
+             array[i].num_episodios);
    }
-
-   printf("]\n");
 }
 
 
@@ -335,21 +341,20 @@ void mostrar (){
 }*/
 
 //========================CODIGO=DE=ORDENAÇÃO=========================================
-int getMaior(Serie *array, int n) {
-    int maior = 0;
-    Serie tmp = array[maior];
+int getMaior() {
+    int maior = array[0].num_temporadas;
 
     for (int i = 0; i < n; i++) {
-        if(maior < tmp[i]){
-            maior = tmp[i];
+        if(maior < array[i].num_temporadas){
+            maior = array[i].num_temporadas;
         }
     }
     return maior;
 }
 //=============================================================================
-void countingsort(Serie *array, int n) {
+void countingsort() {
     //Array para contar o numero de ocorrencias de cada elemento
-    int tamCount = getMaior(array, n) + 1;
+    int tamCount = getMaior() + 1;
     int count[tamCount];
     int ordenado[n];
 
@@ -357,16 +362,16 @@ void countingsort(Serie *array, int n) {
     for (int i = 0; i < tamCount; count[i] = 0, i++);
 
     //Agora, o count[i] contem o numero de elemento iguais a i
-    for (int i = 0; i < n; count[array[i]]++, i++);
+    for (int i = 0; i < n; count[array[i].num_temporadas]++, i++);
 
     //Agora, o count[i] contem o numero de elemento menores ou iguais a i
     for(int i = 1; i < tamCount; count[i] += count[i-1], i++);
 
     //Ordenando
-    for(int i = n-1; i >= 0; ordenado[count[array[i]]-1] = array[i], count[array[i]]--, i--);
+    for(int i = n-1; i >= 0; ordenado[count[array[i].num_temporadas]-1] = array[i].num_temporadas, count[array[i].num_temporadas]--, i--);
 
     //Copiando para o array original
-    for(int i = 0; i < n; array[i] = ordenado[i], i++);
+    for(int i = 0; i < n; array[i].num_temporadas = ordenado[i], i++);
 }
 
 //================================MAIN==============================================
@@ -381,13 +386,13 @@ int main() {
     while (!isFim(line + tam_prefixo)) {
         char *html = ler_html(line);
         ler_serie(&serie, html);
-        inserirFim(serie);
-        mostrar();
         free(html);
-        //print_serie(&serie);
+        inserirFim(serie);
         readline(line + tam_prefixo, MAX_LINE_SIZE);
     }
 
+    countingsort();
+    mostrar();
     return EXIT_SUCCESS;
 }
 

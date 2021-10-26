@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "shellsort.h"
+
 
 #define MAX_FIELD_SIZE 100
 //CLASSE SERIE
@@ -162,7 +162,7 @@ int isFim(char line[]) {
 }
 
 //==================================LISTA============================================
-#define MAXTAM    6
+#define MAXTAM    70
 #define bool      short
 #define true      1
 #define false     0
@@ -309,11 +309,22 @@ Serie remover(int pos) {
 /**
  * Mostra os array separados por espacos.
  */
-void mostrar (){
+void mostrar()
+{
    printf("[ ");
 
-   for(int i = 0; i < n; i++){
-      printf("%s", array[i]);  //ERRO AQUI======================================================================================================================================================================================================================
+   for (int i = 0; i < n; i++)
+   {
+      printf("%s %s %s %s %s %s %s %d %d\n",
+             array[i].nome,
+             array[i].formato,
+             array[i].duracao,
+             array[i].pais,
+             array[i].idioma,
+             array[i].emissora,
+             array[i].transmissao,
+             array[i].num_temporadas,
+             array[i].num_episodios);
    }
 
    printf("]\n");
@@ -335,11 +346,11 @@ void mostrar (){
 }*/
 
 //========================CODIGO=DE=ORDENAÇÃO=========================================
-void insercaoPorCor(int *array, int n, int cor, int h){
+void insercaoPorCor(int n, int cor, int h){
     for (int i = (h + cor); i < n; i+=h) {
-        int tmp = array[i];
+        Serie tmp = array[i];
         int j = i - h;
-        while ((j >= 0) && (array[j] > tmp)) {
+        while ((j >= 0) && (strcmp(array[j].idioma, tmp.idioma) > 0)){
             array[j + h] = array[j];
             j-=h;
         }
@@ -347,7 +358,7 @@ void insercaoPorCor(int *array, int n, int cor, int h){
     }
 }
 
-void shellsort(int *array, int n) {
+void shellsort() {
     int h = 1;
 
     do { h = (h * 3) + 1; } while (h < n);
@@ -355,15 +366,15 @@ void shellsort(int *array, int n) {
     do {
         h /= 3;
         for(int cor = 0; cor < h; cor++){
-            insercaoPorCor(array, n, cor, h);
+            insercaoPorCor( n, cor, h);
         }
     } while (h != 1);
 }
 
 
 //================================MAIN==============================================
-int main() {
-    Serie serie;
+int main(){
+   Serie serie;
     size_t tam_prefixo = strlen(PREFIXO);
     char line[MAX_LINE_SIZE];
 
@@ -373,13 +384,13 @@ int main() {
     while (!isFim(line + tam_prefixo)) {
         char *html = ler_html(line);
         ler_serie(&serie, html);
-        inserirFim(serie);
-        mostrar();
         free(html);
-        //print_serie(&serie);
+        inserirFim(serie);
         readline(line + tam_prefixo, MAX_LINE_SIZE);
     }
 
+   shellsort();
+   mostrar();
     return EXIT_SUCCESS;
 }
 
