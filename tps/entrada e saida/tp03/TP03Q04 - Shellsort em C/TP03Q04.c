@@ -311,8 +311,6 @@ Serie remover(int pos) {
  */
 void mostrar()
 {
-   printf("[ ");
-
    for (int i = 0; i < n; i++)
    {
       printf("%s %s %s %s %s %s %s %d %d\n",
@@ -326,8 +324,6 @@ void mostrar()
              array[i].num_temporadas,
              array[i].num_episodios);
    }
-
-   printf("]\n");
 }
 
 
@@ -351,6 +347,10 @@ void insercaoPorCor(int n, int cor, int h){
         Serie tmp = array[i];
         int j = i - h;
         while ((j >= 0) && (strcmp(array[j].idioma, tmp.idioma) > 0)){
+            array[j + h] = array[j];
+            j-=h;
+        }
+        while ((j >= 0) && (strcmp(array[j].idioma, tmp.idioma) == 0) && (strcmp(array[j].nome, tmp.nome) > 0)){
             array[j + h] = array[j];
             j-=h;
         }
