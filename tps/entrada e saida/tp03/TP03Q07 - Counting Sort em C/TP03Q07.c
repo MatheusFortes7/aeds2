@@ -343,10 +343,13 @@ void mostrar()
 //========================CODIGO=DE=ORDENAÇÃO=========================================
 int getMaior() {
     int maior = array[0].num_temporadas;
-
+    Serie tmp = array[0];
     for (int i = 0; i < n; i++) {
         if(maior < array[i].num_temporadas){
             maior = array[i].num_temporadas;
+        }
+        if(maior == array[i].num_temporadas && (strcmp(tmp.nome, array[i].nome) > 0)){
+            tmp = array[i].nome;
         }
     }
     return maior;
