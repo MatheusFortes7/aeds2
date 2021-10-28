@@ -341,15 +341,14 @@ void mostrar()
 }*/
 
 //========================CODIGO=DE=ORDENAÇÃO=========================================
-int getMaior() {
-    int maior = array[0].num_temporadas;
-    Serie tmp = array[0];
+Serie getMaior() {
+    Serie maior = array[0];
     for (int i = 0; i < n; i++) {
-        if(maior < array[i].num_temporadas){
-            maior = array[i].num_temporadas;
+        if(maior.num_temporadas < array[i].num_temporadas){
+            maior = array[i];
         }
-        if(maior == array[i].num_temporadas && (strcmp(tmp.nome, array[i].nome) > 0)){
-            tmp = array[i].nome;
+        if(maior.num_temporadas == array[i].num_temporadas && (strcmp(maior.nome, array[i].nome) > 0)){
+            maior = array[i];
         }
     }
     return maior;
@@ -357,7 +356,8 @@ int getMaior() {
 //=============================================================================
 void countingsort() {
     //Array para contar o numero de ocorrencias de cada elemento
-    int tamCount = getMaior() + 1;
+    Serie x = getMaior();
+    int tamCount = x.num_temporadas + 1;
     int count[tamCount];
     int ordenado[n];
 
