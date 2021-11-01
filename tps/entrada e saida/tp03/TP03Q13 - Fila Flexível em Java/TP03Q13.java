@@ -275,9 +275,13 @@ class Fila {
 	 * @param x int elemento a inserir.
 	 */
 	public void inserir(Serie x) {
-		ultimo.prox = new Celula(x);
+		if(qtd == 5){
+            remover();
+        }
+        ultimo.prox = new Celula(x);
 		ultimo = ultimo.prox;
         qtd++;
+        System.out.println((int)calcMedia());
 	}
 
 
@@ -313,6 +317,17 @@ class Fila {
     public int getQuantity() {
         return qtd;
     }
+
+    public double calcMedia(){
+        double soma = 0, tmp = 0; 
+        for(Celula i = primeiro.prox; i != null; i = i.prox) {
+			soma += i.elemento.getSeasons();
+            tmp++;
+		}
+        double media = Math.round(soma/tmp);
+        
+        return media;
+    }
 }
 
 public class TP03Q13 {
@@ -331,8 +346,7 @@ public class TP03Q13 {
             fila.inserir(series); 
             // Insere na lista
         } else if (entrada.charAt(0) == 'R') { 
-              fila.remover(); 
-              System.out.println("(R)" + series.getName());
+            fila.remover();
         } 
         
     }
@@ -343,13 +357,13 @@ public class TP03Q13 {
         Fila fila = new Fila(); // Declaracao de fila
         int n = 0, i, stop;
 
-
         // Recebe a primeira parte da entrada
         do {
             entrada[n] = MyIO.readLine();
         } while (isFim(entrada[n++]) == false);
         // Salva as series na lista
         for (i = 0; i < (n - 1); i++) {
+            series = new Serie();
             series.readClass(entrada[i]);
             fila.inserir(series.clone());
         }
@@ -368,7 +382,7 @@ public class TP03Q13 {
         }
 
         // Imprime a lista final
-        fila.mostrar();
+        
         
     }
     
