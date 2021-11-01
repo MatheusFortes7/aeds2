@@ -1,5 +1,7 @@
 import java.io.*;
 import java.io.FileReader;
+import java.util.Date;
+import java.io.RandomAccessFile;
 
 class Serie extends Lista{
     //declaração dos atributos
@@ -417,9 +419,11 @@ class Lista {
            int menor = i;
            for (int j = (i + 1); j < n; j++){
               if (array[menor].getCountry().compareTo(array[j].getCountry()) > 0 ){ 
-                 menor = j;
+                TP03Q01.contador++; 
+                menor = j;
               } else if(array[menor].getCountry().compareTo(array[j].getCountry()) == 0 ){
                 if(array[menor].getName().compareTo(array[j].getName()) > 0){
+                    TP03Q01.contador++;
                     menor = j;
                 }
               }
@@ -440,10 +444,12 @@ class Lista {
  }
 
 class TP03Q01{
-
+    public static int contador = 0; 
     //Salvando os itens no arra nao dara certo pois so ordenara os paises, e nao a linha inteira
     
-    
+    public static long now(){
+        return new Date().getTime();
+    }
 
     public static boolean isFim(String s) {
         return(s.length() == 3 && s.charAt(0) == 'F' && s.charAt(1) == 'I' && s.charAt(2) == 'M');
@@ -454,6 +460,10 @@ class TP03Q01{
         String[] input = new String[1000];
         Lista lista = new Lista();
         int numInput = 0;
+        long inicio=0, fim=0;
+        double diferenca=0;
+
+        inicio = now();
 
         do{
             input[numInput] = MyIO.readLine();
@@ -463,6 +473,7 @@ class TP03Q01{
 
         for(int i = 0; i < numInput;i++){
             try{
+                TP03Q03.contador++;
                 serie = new Serie();
                 serie.readClass(input[i]);
                 //serie.printClass();
@@ -476,7 +487,14 @@ class TP03Q01{
         //System.out.println("----------------");
         lista.SelectionSort();
         lista.mostrar();
+        
+        fim = now();
+        diferenca = (fim - inicio) / 1000.0;
 
+        RandomAccessFile Arq = new RandomAccessFile("matricula_selecao.txt", "rw");
 
+        Arq.writeChars("747358" + "\t" + diferenca + "\t" + TP03Q01.contador);
+
+        Arq.close();
     }
 }
