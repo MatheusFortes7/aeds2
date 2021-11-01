@@ -317,7 +317,7 @@ class Pilha {
 	private void mostraPilha(Celula i) {
 		if (i != null) {
 			mostraPilha(i.prox);
-			System.out.println("" + i.elemento);
+			i.elemento.printClass();
 		}
 	}
     public int getQuantity() {
@@ -343,8 +343,9 @@ public class TP03Q12 {
             pilha.inserir(series); 
             // Insere na lista
         } else if (entrada.charAt(0) == 'R') { 
-              pilha.remover(); 
-              System.out.println("(R)" + series.getName());
+            series = new Serie();
+            series = pilha.remover(); 
+            System.out.println("(R) " + series.getName());
         } 
         
     }
@@ -362,10 +363,11 @@ public class TP03Q12 {
         } while (isFim(entrada[n++]) == false);
         // Salva as series na lista
         for (i = 0; i < (n - 1); i++) {
+            series = new Serie();
             series.readClass(entrada[i]);
             pilha.inserir(series.clone());
         }
-        pilha.mostraPilha();
+        
         // Recebe a segunda parte da entrada
         n = 0;
         stop = MyIO.readInt(); // Recebe o total de alterações a serem feitas
