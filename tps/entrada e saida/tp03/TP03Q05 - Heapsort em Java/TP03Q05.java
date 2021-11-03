@@ -582,7 +582,7 @@ class TP03Q05 {
         fim = now();
         diferenca = (fim - inicio) / 1000.0;
 
-        RandomAccessFile Arq = new RandomAccessFile("matricula_heapsort.txt", "rw");
+        RandomAccessFile Arq = new RandomAccessFile("747358_heapsort.txt", "rw");
 
         Arq.writeChars("747358" + "\t" + diferenca + "\t" + TP03Q05.contador);
 

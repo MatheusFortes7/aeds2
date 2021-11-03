@@ -3,7 +3,7 @@ import java.io.FileReader;
 import java.util.Date;
 import java.io.RandomAccessFile;
 
-class Serie extends Lista {
+class Serie {
     // declaração dos atributos
     private String name;
     private String format;
@@ -546,7 +546,7 @@ class TP03Q06 {
         fim = now();
         diferenca = (fim - inicio) / 1000.0;
 
-        RandomAccessFile Arq = new RandomAccessFile("matricula_quicksort.txt", "rw");
+        RandomAccessFile Arq = new RandomAccessFile("747358_quicksort.txt", "rw");
 
         Arq.writeChars("747358" + "\t" + diferenca + "\t" + TP03Q06.contador);
 
