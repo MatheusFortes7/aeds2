@@ -510,13 +510,9 @@ class ListaDupla {
         Serie pivo = array[(dir + esq) / 2];
         while (i <= j) {
             TP03Q14.contador++;
-            while ((array[i].getCountry().compareTo(pivo.getCountry()) < 0)
-                    || ((array[i].getCountry().compareTo(pivo.getCountry()) == 0)
-                            && (array[i].getName().compareTo(pivo.getName()) < 0)))
+            while ((array[i].getCountry().compareTo(pivo.getCountry()) < 0) || ((array[i].getCountry().compareTo(pivo.getCountry()) == 0) && (array[i].getName().compareTo(pivo.getName()) < 0)))
                 i++;
-            while ((array[j].getCountry().compareTo(pivo.getCountry()) > 0)
-                    || ((array[j].getCountry().compareTo(pivo.getCountry()) == 0)
-                            && (array[j].getName().compareTo(pivo.getName()) > 0)))
+            while ((array[j].getCountry().compareTo(pivo.getCountry()) > 0) || ((array[j].getCountry().compareTo(pivo.getCountry()) == 0) && (array[j].getName().compareTo(pivo.getName()) > 0)))
                 j--;
 
             if (i <= j) {
