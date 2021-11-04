@@ -5,7 +5,8 @@
 
 #define MAX_FIELD_SIZE 100
 
-typedef struct {
+typedef struct
+{
     char nome[MAX_FIELD_SIZE];
     char formato[MAX_FIELD_SIZE];
     char duracao[MAX_FIELD_SIZE];
@@ -17,36 +18,41 @@ typedef struct {
     int num_episodios;
 } Serie;
 
-char *remove_line_break(char *line) {
-    while (*line != '\r' && *line != '\n') line++;
+char *remove_line_break(char *line)
+{
+    while (*line != '\r' && *line != '\n')
+        line++;
     *line = '\0';
     return line;
 }
 
-char *freadline(char *line, int max_size, FILE *file) {
+char *freadline(char *line, int max_size, FILE *file)
+{
     return remove_line_break(fgets(line, max_size, file));
 }
 
-char *readline(char *line, int max_size) {
+char *readline(char *line, int max_size)
+{
     return freadline(line, max_size, stdin);
 }
 
-void print_serie(Serie *serie) {
+void print_serie(Serie *serie)
+{
     printf("%s %s %s %s %s %s %s %d %d\n",
-        serie->nome,
-        serie->formato,
-        serie->duracao,
-        serie->pais,
-        serie->idioma,
-        serie->emissora,
-        serie->transmissao,
-        serie->num_temporadas,
-        serie->num_episodios
-    );
+           serie->nome,
+           serie->formato,
+           serie->duracao,
+           serie->pais,
+           serie->idioma,
+           serie->emissora,
+           serie->transmissao,
+           serie->num_temporadas,
+           serie->num_episodios);
 }
 
 // Retorna o tamanho em bytes de um arquivo.
-long tam_arquivo(FILE *file) {
+long tam_arquivo(FILE *file)
+{
     fseek(file, 0L, SEEK_END);
     long size = ftell(file);
     rewind(file);
@@ -54,14 +60,16 @@ long tam_arquivo(FILE *file) {
 }
 
 // Retorna todo o conteúdo do arquivo numa string.
-char *ler_html(char filename[]) {
+char *ler_html(char filename[])
+{
     FILE *file = fopen(filename, "r");
-    if (!file) {
+    if (!file)
+    {
         fprintf(stderr, "Falha ao abrir arquivo %s\n", filename);
         exit(1);
     }
     long tam = tam_arquivo(file);
-    char *html = (char *) malloc(sizeof(char) * (tam + 1));
+    char *html = (char *)malloc(sizeof(char) * (tam + 1));
     fread(html, 1, tam, file);
     fclose(file);
     html[tam] = '\0';
@@ -76,24 +84,32 @@ char *ler_html(char filename[]) {
  * 
  * @return Ponteiro para o texto extraído.
  */
-char *extrair_texto(char *html, char *texto) {
+char *extrair_texto(char *html, char *texto)
+{
     char *start = texto;
     int contagem = 0;
-    while (*html != '\0') {
-        if (*html == '<') {
+    while (*html != '\0')
+    {
+        if (*html == '<')
+        {
             if (
                 (*(html + 1) == 'p') ||
                 (*(html + 1) == 'b' && *(html + 2) == 'r') ||
                 (*(html + 1) == '/' && *(html + 2) == 'h' && *(html + 3) == '1') ||
                 (*(html + 1) == '/' && *(html + 2) == 't' && *(html + 3) == 'h') ||
-                (*(html + 1) == '/' && *(html + 2) == 't' && *(html + 3) == 'd')
-            ) break;
-            else contagem++;
+                (*(html + 1) == '/' && *(html + 2) == 't' && *(html + 3) == 'd'))
+                break;
+            else
+                contagem++;
         }
-        else if (*html == '>') contagem--;
-        else if (contagem == 0 && *html != '"') {
-            if (*html == '&') html = strchr(html, ';');
-            else if (*html != '\r' && *html != '\n') *texto++ = *html;
+        else if (*html == '>')
+            contagem--;
+        else if (contagem == 0 && *html != '"')
+        {
+            if (*html == '&')
+                html = strchr(html, ';');
+            else if (*html != '\r' && *html != '\n')
+                *texto++ = *html;
         }
         html++;
     }
@@ -107,14 +123,16 @@ char *extrair_texto(char *html, char *texto) {
  * @param serie Struct Serie que vai receber os dados.
  * @param html String contendo todo o HTML do arquivo.
  */
-void ler_serie(Serie *serie, char *html) {
+void ler_serie(Serie *serie, char *html)
+{
     char texto[MAX_FIELD_SIZE];
 
     char *ptr = strstr(html, "<h1");
     extrair_texto(ptr, texto);
 
     char *parenteses_ptr = strchr(texto, '(');
-    if (parenteses_ptr != NULL) *(parenteses_ptr - 1) = '\0';
+    if (parenteses_ptr != NULL)
+        *(parenteses_ptr - 1) = '\0';
 
     strcpy(serie->nome, texto);
 
@@ -153,40 +171,43 @@ void ler_serie(Serie *serie, char *html) {
     sscanf(extrair_texto(ptr, texto), "%d", &serie->num_episodios);
 }
 
-typedef struct Celula {
-	int elemento;        // Elemento inserido na celula.
-	struct Celula* prox; // Aponta a celula prox.
+typedef struct Celula
+{
+    Serie elemento;      // Elemento inserido na celula.
+    struct Celula *prox; // Aponta a celula prox.
 } Celula;
 
-Celula* novaCelula(int elemento) {
-   Celula* nova = (Celula*) malloc(sizeof(Celula));
-   nova->elemento = elemento;
-   nova->prox = NULL;
-   return nova;
+Celula *novaCelula(Serie elemento)
+{
+    Celula *nova = (Celula *)malloc(sizeof(Celula));
+    nova->elemento = elemento;
+    nova->prox = NULL;
+    return nova;
 }
 
 //PILHA PROPRIAMENTE DITA =======================================================
-Celula* topo; // Sem celula cabeca.
+Celula *topo; // Sem celula cabeca.
 int qtd;
 
 /**
  * Cria uma fila sem elementos.
  */
-void start () {
-   topo = NULL;
-   qtd = 0;
+void start()
+{
+    topo = NULL;
+    qtd = 0;
 }
-
 
 /**
  * Insere elemento na pilha (politica FILO).
  * @param x int elemento a inserir.
  */
-void inserir(int x) {
-   Celula* tmp = novaCelula(x);
-   tmp->prox = topo;
-   topo = tmp;
-   tmp = NULL;
+void inserir(Serie x)
+{
+    Celula *tmp = novaCelula(x);
+    tmp->prox = topo;
+    topo = tmp;
+    tmp = NULL;
     qtd++;
 }
 
@@ -194,57 +215,82 @@ void inserir(int x) {
  * Remove elemento da pilha (politica FILO).
  * @return Elemento removido.
  */
-int remover() {
-   if (topo == NULL) {
-      errx(1, "Erro ao remover!");
-   }
+Serie remover()
+{
+    if (topo == NULL)
+    {
+        errx(1, "Erro ao remover!");
+    }
 
-   int resp = topo->elemento;
-   Celula* tmp = topo;
-   topo = topo->prox;
-   tmp->prox = NULL;
-   free(tmp);
-   tmp = NULL;
-   qtd--;
-   return resp;
+    Serie resp = topo->elemento;
+    Celula *tmp = topo;
+    topo = topo->prox;
+    tmp->prox = NULL;
+    free(tmp);
+    tmp = NULL;
+    qtd--;
+    return resp;
 }
-
 
 /**
  * Mostra os elementos separados por espacos, comecando do topo.
  */
-void mostrar() {
-   Celula* i;
-   printf("[");
-   for(i = topo; i != NULL; i = i->prox) {
-      printf("%d ,", i->elemento);
-   }
-
-   printf("] \n");
+void mostrar(){
+    Celula *i;
+    for (i = topo; i != NULL; i = i->prox){
+        printf("%s ", i->elemento.nome);
+        printf("%s ", i->elemento.formato);
+        printf("%s ", i->elemento.duracao);
+        printf("%s ", i->elemento.pais);
+        printf("%s ", i->elemento.idioma);
+        printf("%s ", i->elemento.emissora);
+        printf("%s ", i->elemento.transmissao);
+        printf("%d ", i->elemento.num_temporadas);
+        printf("%d\n", i->elemento.num_episodios);
+    }
 }
 
-int getQuantity() {
+int getQuantity()
+{
     return qtd;
 }
-
 
 #define MAX_LINE_SIZE 250
 #define PREFIXO "/tmp/series/"
 
-
-int isFim(char line[]) {
+int isFim(char line[])
+{
     return line[0] == 'F' && line[1] == 'I' && line[2] == 'M';
 }
 
-int main() {
+void alteraLista(char string[], Serie series, Celula pilha)
+{
+    if (string[0] == 'I'){
+        // Entrada no inicio
+        char insercao[MAX_LINE_SIZE] = "";  
+        ler_serie(&series, strncpy(insercao, string, 3)); //!ERRO ESTA AQUII NESTA LINHA
+        // Retira o comando
+        inserir(series);
+        // Insere na lista
+    }
+    else if (string[0] == 'R'){
+        series = remover();
+        printf("(R) %s", series.nome);
+    }
+}
+
+int main()
+{
     Serie serie;
+    Celula pilha;
     size_t tam_prefixo = strlen(PREFIXO);
     char line[MAX_LINE_SIZE];
 
     strcpy(line, PREFIXO);
     readline(line + tam_prefixo, MAX_LINE_SIZE);
 
-    while (!isFim(line + tam_prefixo)) {
+    while (!isFim(line + tam_prefixo))
+    {
         char *html = ler_html(line);
         ler_serie(&serie, html);
         free(html);
@@ -252,6 +298,16 @@ int main() {
         readline(line + tam_prefixo, MAX_LINE_SIZE);
     }
     
+    int stop;
+    scanf("%d", &stop);
+
+    char string[MAX_LINE_SIZE];
+    for (int i = 0; i < stop; i++)
+    {
+        scanf(" %[^\n]s", string);
+        alteraLista(string, serie, pilha);
+    }
     
+
     return EXIT_SUCCESS;
 }
