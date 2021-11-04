@@ -448,11 +448,11 @@ class ListaDupla {
      * Mostra os elementos da lista separados por espacos.
      */
     public void mostrar() {
-        System.out.print("[ "); // Comeca a mostrar.
+       
         for (CelulaDupla i = primeiro.prox; i != null; i = i.prox) {
-            System.out.print(i.elemento + " ");
+            i.elemento.printClass();
         }
-        System.out.println("] "); // Termina de mostrar.
+
     }
 
     /**
@@ -499,21 +499,28 @@ class ListaDupla {
         quicksort(0, tamanho()-1);
     }
 
-    /**
-     * Algoritmo de ordenacao Quicksort.
-     * 
-     * @param int esq inicio do array a ser ordenado
-     * @param int dir fim do array a ser ordenado
-     */
+    public CelulaDupla getCelulaIndex(int pos){
+        int tmp = 0;
+        CelulaDupla i;
+        for( i = primeiro.prox; tmp < pos ; i = i.prox, tmp++);
+        return i;
+    }
+
     private void quicksort(int esq, int dir) {
         int i = esq, j = dir;
-        Serie pivo = array[(dir + esq) / 2];
+        Serie pivo = getCelulaIndex((esq + dir)/2 ).elemento;
         while (i <= j) {
+            CelulaDupla aux = getCelulaIndex(i);
             TP03Q14.contador++;
-            while ((array[i].getCountry().compareTo(pivo.getCountry()) < 0) || ((array[i].getCountry().compareTo(pivo.getCountry()) == 0) && (array[i].getName().compareTo(pivo.getName()) < 0)))
+            while ((aux.elemento.getCountry().compareTo(pivo.getCountry()) < 0) || ((aux.elemento.getCountry().compareTo(pivo.getCountry()) == 0) && (aux.elemento.getName().compareTo(pivo.getName()) < 0))){
                 i++;
-            while ((array[j].getCountry().compareTo(pivo.getCountry()) > 0) || ((array[j].getCountry().compareTo(pivo.getCountry()) == 0) && (array[j].getName().compareTo(pivo.getName()) > 0)))
+                aux = aux.prox;
+            }
+            CelulaDupla index = getCelulaIndex(j);
+            while ((index.elemento.getCountry().compareTo(pivo.getCountry()) > 0) || ((index.elemento.getCountry().compareTo(pivo.getCountry()) == 0) && (index.elemento.getName().compareTo(pivo.getName()) > 0))){
                 j--;
+                index = index.ant;
+            }
 
             if (i <= j) {
                 TP03Q14.contador++;
@@ -534,9 +541,9 @@ class ListaDupla {
     }
 
     public void swap(int i, int primeiro) {
-        Serie aux = array[i];
-        array[i] = array[primeiro];
-        array[primeiro] = aux;
+        Serie aux = getCelulaIndex(i).elemento;
+        getCelulaIndex(i).elemento = getCelulaIndex(primeiro).elemento;
+        getCelulaIndex(primeiro).elemento = aux;
     }
 
 }
