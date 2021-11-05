@@ -171,6 +171,7 @@ void ler_serie(Serie *serie, char *html)
     sscanf(extrair_texto(ptr, texto), "%d", &serie->num_episodios);
 }
 
+
 typedef struct Celula
 {
     Serie elemento;      // Elemento inserido na celula.
@@ -263,24 +264,46 @@ int isFim(char line[])
     return line[0] == 'F' && line[1] == 'I' && line[2] == 'M';
 }
 
-void alteraLista(char string[], Serie series, Celula pilha)
-{
+
+char* substring(char str[], char* ln, int i,int j){
+    int k = 0;
+    while(i <= j){
+        str[k] = ln[i];
+        i++;
+        k++;
+    }
+    return str;
+}
+
+char *getSubstring(char *dst, const char *src, size_t start, size_t end){
+    return strncpy(dst, src + start, end);
+}
+
+
+
+void alteraLista(char string[], Serie series, Celula pilha, int tam){
     if (string[0] == 'I'){
-        // Entrada no inicio
-        char insercao[MAX_LINE_SIZE] = "";  
-        ler_serie(&series, strncpy(insercao, string, 3)); //!ERRO ESTA AQUII NESTA LINHA
+        // Entrada no inicio    
+        char linha[100];
+        char str[100];
+        
+        //printf("%s\n" ,getSubstring(str,string, 2, tam));
+        //linha,"/tmp/series/", getSubstring(str,string, 2, tam)
+        //printf("%s\n", strcat(strcpy(linha, "/tmp/series/"), getSubstring(str,string, 2, tam)));
+        char *html = ler_html(strcat(strcpy(linha, "/tmp/series/"), getSubstring(str,string, 2, tam)));
+        ler_serie(&series, html);
+        free(html);
         // Retira o comando
         inserir(series);
         // Insere na lista
     }
     else if (string[0] == 'R'){
         series = remover();
-        printf("(R) %s", series.nome);
+        printf("(R) %s\n", series.nome);
     }
 }
 
-int main()
-{
+int main(){
     Serie serie;
     Celula pilha;
     size_t tam_prefixo = strlen(PREFIXO);
@@ -289,24 +312,33 @@ int main()
     strcpy(line, PREFIXO);
     readline(line + tam_prefixo, MAX_LINE_SIZE);
 
-    while (!isFim(line + tam_prefixo))
-    {
+    while (!isFim(line + tam_prefixo)){
         char *html = ler_html(line);
         ler_serie(&serie, html);
+        for(long i = 0; i < 70000; i++){
+            html[i] = 0;
+        }
         free(html);
-        print_serie(&serie);
+        //print_serie(&serie);
+        inserir(serie);
         readline(line + tam_prefixo, MAX_LINE_SIZE);
     }
     
     int stop;
     scanf("%d", &stop);
 
-    char string[MAX_LINE_SIZE];
+    
     for (int i = 0; i < stop; i++)
     {
+        Serie teste;
+        int tamanho;
+        char string[MAX_LINE_SIZE];
         scanf(" %[^\n]s", string);
-        alteraLista(string, serie, pilha);
+        tamanho = strlen(string);
+        alteraLista(string, teste, pilha, tamanho);
     }
+
+    mostrar();
     
 
     return EXIT_SUCCESS;
