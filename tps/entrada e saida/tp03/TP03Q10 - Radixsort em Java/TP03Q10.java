@@ -1,5 +1,7 @@
 import java.io.*;
 import java.io.FileReader;
+import java.util.Arrays;
+import java.util.Date;
 
 class Serie extends Lista{
     //declaração dos atributos
@@ -12,6 +14,7 @@ class Serie extends Lista{
     private String streaming;
     private int seasons;
     private int episodes;
+    public int numDoidao;
     //construtor primário
     public Serie(){
         name = "";
@@ -23,10 +26,12 @@ class Serie extends Lista{
         streaming = "";
         seasons = 0;
         episodes = 0;
+        // numDoidao = 0;
+        
     }
     //construtor secundário
     public Serie(String name, String format, String duration, String country, String language, String broadcaster, String streaming, int seasons, 
-    int episodes){
+    int episodes, int numDoidao){
         this.name = name;
         this.format = format;
         this.duration = duration;
@@ -36,6 +41,7 @@ class Serie extends Lista{
         this.streaming = streaming;
         this.seasons = seasons;
         this.episodes = episodes;
+        // this.numDoidao = numDoidao;
     }
     //método para setar o atributo name
     public void setName(String name){
@@ -73,6 +79,10 @@ class Serie extends Lista{
     public void setEpisodes(int episodes){
         this.episodes = episodes;
     }
+    //método para setar o atributo numDoidao
+    // public void setNumDoidao(int numDoidao){
+    //     this.numDoidao = numDoidao;
+    // }
     //método para retornar o atributo name
     public String getName(){ 
         return this.name; 
@@ -109,6 +119,11 @@ class Serie extends Lista{
     public int getEpisodes(){ 
         return this.episodes; 
     }
+
+    //método para retornar o atributo numDoidao
+    // public int getNumDoidao(){
+    //     return this.numDoidao;
+    // }
     //método para clonar a classe
     public Serie clone(){
         Serie resp = new Serie();
@@ -121,12 +136,15 @@ class Serie extends Lista{
         resp.streaming = this.streaming;
         resp.seasons = this.seasons;
         resp.episodes = this.episodes;
+        // resp.numDoidao = this.numDoidao;
         return resp;
     }
     //método para printar a classe
     public void printClass(){
         System.out.println(this.name + " " + this.format + " " + this.duration + " " + this.country + " " + this.language + " " + this.broadcaster + " " +
         this.streaming + " " + this.seasons + " " + this.episodes);
+
+        // System.out.println(this.numDoidao);
     }
     //método para tratar a linha, deixar apenas números e converter o retorno de String para Integer
     public int justInt(String line){
@@ -220,6 +238,8 @@ class Serie extends Lista{
             //set episódios da série
             while(!br.readLine().contains("N.º de episódios"));
             this.episodes = justInt(removeTags(br.readLine()));
+
+            // this.numDoidao = (this.episodes * 1000) + this.seasons;
             
             
             //fechamento do bufferedReader
@@ -314,6 +334,7 @@ class Lista {
        //levar elementos para o fim do array
        for(int i = n; i > pos; i--){
           array[i] = array[i-1];
+          TP03Q10.contador++;
        }
  
        array[pos] = x;
@@ -339,6 +360,7 @@ class Lista {
  
        for(int i = 0; i < n; i++){
           array[i] = array[i+1];
+          TP03Q10.contador++;
        }
  
        return resp;
@@ -380,6 +402,7 @@ class Lista {
  
        for(int i = pos; i < n; i++){
           array[i] = array[i+1];
+          TP03Q10.contador++;
        }
  
        return resp;
@@ -412,27 +435,77 @@ class Lista {
        return retorno;
     }
 
-    //cdigo de ordenacao
     
+     int getMaior(){
+        Serie maior = array[0];
+        for (int i = 0; i < n; i++) {
+            if(getNumDoidao(maior) < getNumDoidao(array[i])) {
+                maior = array[i];
+                TP03Q10.contador++;
+            }
 
-   public void swap(int i, int primeiro){
-    Serie aux = array[i];
-    array[i] = array[primeiro];
-    array[primeiro] = aux;
-} 
+        }
+        return getNumDoidao(maior);
+    }
+	
+	public void sort() {
+		for (int i = 1; i < n; i++) {
+			Serie tmp = array[i];
+			int j = i - 1;
 
-    //FALTA ORDENAR POR NOME
+			while ((j >= 0) && (array[j].getName().compareTo(tmp.getName()) > 0)){
+				array[j + 1] = array[j];
 
+                TP03Q10.contador++;
+				j--;
+			}
+			array[j + 1] = tmp;
+		}
+	}
+	
 
-    // 0  strings iguals
-    // > 0 Tem  letra 
+    int getNumDoidao(Serie x){
+        return (x.getEpisodes() * 1000) + x.getSeasons();
+    }
+
+    void countingSort(int exp){
+        int tamCount = getMaior() + 1;
+        int[] count = new int[tamCount];
+        Serie[] ordenado = new Serie [n];
+ 
+        for(int i = 0; i < tamCount; count[i] = 0, i++);
+        TP03Q10.contador++;
+        for (int i = 0; i < n; count[(getNumDoidao(array[i]) / exp)%10]++, i++);
+        TP03Q10.contador++;
+        for(int i = 1; i < tamCount; count[i] += count[i-1], i++);
+        TP03Q10.contador++;
+        for(int i = n-1; i >= 0; ordenado[count[(getNumDoidao(array[i]) / exp)%10]-1] = array[i], count[(getNumDoidao(array[i]) / exp)%10]--, i--);
+        TP03Q10.contador++;
+        for(int i = 0; i < n; array[i] = ordenado[i], i++);
+        TP03Q10.contador++;
+     }
+
+     void radixSort(){
+         int m = getMaior();
+
+         for (int exp = 1; m/exp > 0; exp *= 10){
+            countingSort(exp);
+            TP03Q10.contador++;
+        }
+     }
+    
+    
+    
  }
 
-class TP03Q10{
 
-    //Salvando os itens no arra nao dara certo pois so ordenara os paises, e nao a linha inteira
-    
-    
+
+class TP03Q10{
+    public static int contador = 0; 
+ 
+    public static long now(){
+        return new Date().getTime();
+    }
 
     public static boolean isFim(String s) {
         return(s.length() == 3 && s.charAt(0) == 'F' && s.charAt(1) == 'I' && s.charAt(2) == 'M');
@@ -443,6 +516,10 @@ class TP03Q10{
         String[] input = new String[1000];
         Lista lista = new Lista();
         int numInput = 0;
+        long inicio=0, fim=0;
+        double diferenca=0;
+
+        inicio = now();
 
         do{
             input[numInput] = MyIO.readLine();
@@ -463,9 +540,17 @@ class TP03Q10{
         //System.out.println("----------------");
         //System.out.println("ordenado");
         //System.out.println("----------------");
-        lista.bubbleSort();
-        lista.mostrar();
+	lista.sort();
+    lista.radixSort();
+    lista.mostrar();
 
+    fim = now();
+        diferenca = (fim - inicio) / 1000.0;
 
+        RandomAccessFile Arq = new RandomAccessFile("747358_radixsort.txt", "rw");
+
+        Arq.writeChars("747358" + "\t" + diferenca + "\t" + TP03Q10.contador);
+
+        Arq.close();
     }
 }
