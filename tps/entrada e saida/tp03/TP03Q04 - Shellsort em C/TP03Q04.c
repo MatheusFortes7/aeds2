@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
+#include <time.h>
 
 #define MAX_FIELD_SIZE 100
 //CLASSE SERIE
@@ -167,7 +167,7 @@ int isFim(char line[]) {
 #define true      1
 #define false     0
 
-
+int contador;
 Serie array[MAXTAM];   // Elementos da pilha 
 int n;               // Quantidade de array.
 
@@ -192,6 +192,7 @@ void inserirInicio(Serie x) {
    //levar elementos para o fim do array
    for(int i = n; i > 0; i--){
       array[i] = array[i-1];
+      contador++;
    }
 
    array[0] = x;
@@ -232,6 +233,7 @@ void inserir(Serie x, int pos) {
    //levar elementos para o fim do array
    for(int i = n; i > pos; i--){
       array[i] = array[i-1];
+      contador++;
    }
 
    array[pos] = x;
@@ -258,6 +260,7 @@ Serie removerInicio() {
 
    for(int i = 0; i < n; i++){
       array[i] = array[i+1];
+      contador++;
    }
 
    return resp;
@@ -349,10 +352,12 @@ void insercaoPorCor(int n, int cor, int h){
         while ((j >= 0) && (strcmp(array[j].idioma, tmp.idioma) > 0)){
             array[j + h] = array[j];
             j-=h;
+            contador++;
         }
         while ((j >= 0) && (strcmp(array[j].idioma, tmp.idioma) == 0) && (strcmp(array[j].nome, tmp.nome) > 0)){
             array[j + h] = array[j];
             j-=h;
+            contador++;
         }
         array[j + h] = tmp;
     }
@@ -367,6 +372,7 @@ void shellsort() {
         h /= 3;
         for(int cor = 0; cor < h; cor++){
             insercaoPorCor( n, cor, h);
+            contador++;
         }
     } while (h != 1);
 }
@@ -377,7 +383,8 @@ int main(){
    Serie serie;
     size_t tam_prefixo = strlen(PREFIXO);
     char line[MAX_LINE_SIZE];
-
+    clock_t t;
+    t = clock();
     strcpy(line, PREFIXO);
     readline(line + tam_prefixo, MAX_LINE_SIZE);
 
@@ -391,6 +398,16 @@ int main(){
 
    shellsort();
    mostrar();
+   t = clock() - t;
+
+   FILE *arq;
+   
+   arq = fopen("747358_shellsort.txt", "a");
+
+   fprintf(arq, "747358 \t %ld \t %d", t, contador);;
+
+   fclose(arq);
+
     return EXIT_SUCCESS;
 }
 

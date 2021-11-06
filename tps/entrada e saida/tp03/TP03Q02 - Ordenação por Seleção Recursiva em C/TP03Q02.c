@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 
 #define MAX_FIELD_SIZE 100
@@ -186,6 +187,8 @@ int isFim(char line[])
 #define bool short
 #define true 1
 #define false 0
+int contador = 0;
+
 
 Serie array[MAXTAM]; // Elementos da pilha
 int n;               // Quantidade de array.
@@ -213,6 +216,7 @@ void inserirInicio(Serie x)
    for (int i = n; i > 0; i--)
    {
       array[i] = array[i - 1];
+      contador++;
    }
 
    array[0] = x;
@@ -256,6 +260,7 @@ void inserir(Serie x, int pos)
    for (int i = n; i > pos; i--)
    {
       array[i] = array[i - 1];
+      contador++;
    }
 
    array[pos] = x;
@@ -284,6 +289,7 @@ Serie removerInicio()
    for (int i = 0; i < n; i++)
    {
       array[i] = array[i + 1];
+      contador++;
    }
 
    return resp;
@@ -329,6 +335,7 @@ Serie remover(int pos)
    for (int i = pos; i < n; i++)
    {
       array[i] = array[i + 1];
+      contador++;
    }
 
    return resp;
@@ -384,10 +391,12 @@ void selecao()
       for (int j = (i + 1); j < n; j++) {
          if (strcmp(array[menor].pais, array[j].pais) > 0) { 
             menor = j;
+            contador++;
          } else if(strcmp(array[menor].pais, array[j].pais) == 0){
             if (strcmp(array[menor].nome, array[j].nome) > 0)
             {
                menor = j;
+               contador++;
             }
             
          }
@@ -399,9 +408,10 @@ void selecao()
 //================================MAIN==============================================
 int main(){
    Serie serie;
+   clock_t t;
     size_t tam_prefixo = strlen(PREFIXO);
     char line[MAX_LINE_SIZE];
-
+   t = clock();
     strcpy(line, PREFIXO);
     readline(line + tam_prefixo, MAX_LINE_SIZE);
 
@@ -415,5 +425,14 @@ int main(){
 
    selecao();
    mostrar();
-    return EXIT_SUCCESS;
+   t = clock() - t;
+   FILE *arq;
+   
+   arq = fopen("747358_selecaoRecusriva.txt", "a");
+
+   fprintf(arq, "747358 \t %ld \t %d", t, contador);;
+
+   fclose(arq);
+
+   return EXIT_SUCCESS;
 }
