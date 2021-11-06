@@ -277,7 +277,6 @@ class Pilha {
 		tmp.prox = topo;
 		topo = tmp;
 		tmp = null;
-        qtd++;
 	}
 
 	/**
@@ -303,11 +302,9 @@ class Pilha {
 	 * Mostra os elementos separados por espacos, comecando do topo.
 	 */
 	public void mostrar() {
-		System.out.print("[ ");
 		for (Celula i = topo; i != null; i = i.prox) {
-			System.out.print(i.elemento + " ");
+			i.elemento.printClass();
 		}
-		System.out.println("] ");
 	}
 
 	public void mostraPilha() {
@@ -382,7 +379,7 @@ public class TP03Q12 {
         }
 
         // Imprime a lista final
-        pilha.mostraPilha();
+        pilha.mostrar();
         
     }
     

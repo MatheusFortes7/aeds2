@@ -473,7 +473,7 @@ class TP03Q01{
 
         for(int i = 0; i < numInput;i++){
             try{
-                TP03Q03.contador++;
+                TP03Q01.contador++;
                 serie = new Serie();
                 serie.readClass(input[i]);
                 //serie.printClass();
