@@ -372,24 +372,12 @@ void sort() {
 	}
 }
 
-void sort1() {
-	for (int i = 1; i < n; i++) {
-		Serie tmp = array[i];
-		int j = i - 1;
-		while ((j >= 0) && (array[j].num_temporadas > tmp.num_temporadas)){
-			array[j + 1] = array[j];
-			j--;
-		}
-		array[j + 1] = tmp;
-	}
-}
-
 void countingsort() {
     //Array para contar o numero de ocorrencias de cada elemento
     Serie x = getMaior();
     int tamCount = x.num_temporadas + 1;
     int count[tamCount];
-    int ordenado[n];
+    Serie ordenado[n];
 
     //Inicializar cada posicao do array de contagem 
     for (int i = 0; i < tamCount; count[i] = 0, i++);
@@ -401,10 +389,10 @@ void countingsort() {
     for(int i = 1; i < tamCount; count[i] += count[i-1], i++);
 
     //Ordenando
-    for(int i = n-1; i >= 0; ordenado[count[array[i].num_temporadas]-1] = array[i].num_temporadas, count[array[i].num_temporadas]--, i--);
+    for(int i = n-1; i >= 0; ordenado[count[array[i].num_temporadas]-1] = array[i], count[array[i].num_temporadas]--, i--);
 
     //Copiando para o array original
-    for(int i = 0; i < n; array[i].num_temporadas = ordenado[i], i++);
+    for(int i = 0; i < n; array[i] = ordenado[i], i++);
 }
 
 //================================MAIN==============================================
@@ -424,9 +412,8 @@ int main() {
         inserirFim(serie);
         readline(line + tam_prefixo, MAX_LINE_SIZE);
     }
-    //!NAO CONSEGUI UTILIZAR O COUNTINGSORT, POIS ELE SO ESTAVA ORDENANDO OS NUMEROS DE TEMPORADA, NAO A SERIE INTEIRA
     sort();
-    sort1();
+    countingsort();
     mostrar();
     t = clock() - t;
 
