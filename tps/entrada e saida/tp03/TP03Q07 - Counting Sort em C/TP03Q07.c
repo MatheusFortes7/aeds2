@@ -364,7 +364,19 @@ void sort() {
 	for (int i = 1; i < n; i++) {
 		Serie tmp = array[i];
 		int j = i - 1;
-		while ((j >= 0) && (strcmp(array[j].nome, tmp.nome))){
+		while ((j >= 0) && (strcmp(array[j].nome, tmp.nome))> 0 ){
+			array[j + 1] = array[j];
+			j--;
+		}
+		array[j + 1] = tmp;
+	}
+}
+
+void sort1() {
+	for (int i = 1; i < n; i++) {
+		Serie tmp = array[i];
+		int j = i - 1;
+		while ((j >= 0) && (array[j].num_temporadas > tmp.num_temporadas)){
 			array[j + 1] = array[j];
 			j--;
 		}
@@ -413,8 +425,8 @@ int main() {
         readline(line + tam_prefixo, MAX_LINE_SIZE);
     }
     
-    countingsort();
-    
+    sort();
+    sort1();
     mostrar();
     t = clock() - t;
 
