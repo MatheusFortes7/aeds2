@@ -424,7 +424,7 @@ int main() {
         inserirFim(serie);
         readline(line + tam_prefixo, MAX_LINE_SIZE);
     }
-    
+    //!NAO CONSEGUI UTILIZAR O COUNTINGSORT, POIS ELE SO ESTAVA ORDENANDO OS NUMEROS DE TEMPORADA, NAO A SERIE INTEIRA
     sort();
     sort1();
     mostrar();
