@@ -476,7 +476,6 @@ class TP03Q01{
                 TP03Q01.contador++;
                 serie = new Serie();
                 serie.readClass(input[i]);
-                //serie.printClass();
                 lista.inserirFim(serie); 
             }catch(Exception e){
             }
