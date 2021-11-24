@@ -420,7 +420,7 @@ class ArvoreBinaria {
 	 * @param x Elemento a ser removido.
 	 * @throws Exception Se nao encontrar elemento.
 	 */
-	public void remover(Serie x) {
+	public void remover(String x) {
 		raiz = remover(x, raiz);
 	}
 
@@ -432,15 +432,15 @@ class ArvoreBinaria {
 	 * @return No em analise, alterado ou nao.
 	 * @throws Exception Se nao encontrar elemento.
 	 */
-	private No remover(Serie x, No i) {
+	private No remover(String x, No i) {
 
 		if (i == null) {
 			
 
-		} else if (x.getName().compareTo(i.elemento.getName()) < 0) {
+		} else if (x.compareTo(i.elemento.getName()) < 0) {
 			i.esq = remover(x, i.esq);
 
-		} else if (x.getName().compareTo(i.elemento.getName()) > 0) {
+		} else if (x.compareTo(i.elemento.getName()) > 0) {
 			i.dir = remover(x, i.dir);
 
 			// Sem no a direita.
@@ -559,11 +559,9 @@ class TP04Q01{
             // Retira o comando
             arvore.inserir(series); 
             // Insere na arvore
-        } else if(entrada.charAt(0) == 'R'){
-            // Entrada no inicio
-            series.readClass(entrada.substring(2)); 
+        } else if(entrada.charAt(0) == 'R'){ 
             // Retira o comando
-            arvore.remover(series); 
+            arvore.remover(entrada.substring(2)); 
             // remove na arvore
         }
     }

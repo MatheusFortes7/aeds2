@@ -1,16 +1,12 @@
-Unable to open file 'Jessica Jones'
-Unable to open file 'Outlander'
-Unable to open file 'Black Mirror'
-Unable to open file 'Grimm'
  raiz dir dir dir dir dir esq NAO
- raiz dir dir dir dir dir dir dir dir dir dir dir dir dir dir dir dir dir dir dir esq NAO
+ raiz dir dir dir dir dir dir dir dir dir dir dir dir dir dir dir dir dir esq NAO
  raiz dir dir esq dir dir esq esq dir NAO
  raiz dir dir dir dir dir dir dir dir dir esq dir NAO
  raiz dir dir dir dir dir dir dir SIM
  raiz dir dir dir dir dir dir dir dir SIM
+ raiz dir dir dir dir dir dir dir dir dir esq dir NAO
  raiz dir dir dir dir dir dir dir dir dir SIM
  raiz dir dir dir dir dir dir dir dir dir dir SIM
- raiz dir dir dir dir dir dir dir dir dir dir dir SIM
- raiz dir dir dir dir dir dir dir dir dir dir dir dir esq NAO
- raiz dir dir dir dir dir dir dir dir dir dir dir dir dir SIM
- raiz dir dir dir dir dir dir dir dir dir dir dir dir dir dir SIM
+ raiz dir dir dir dir dir dir dir dir dir dir dir esq NAO
+ raiz dir dir dir dir dir dir dir dir dir dir dir dir esq dir dir NAO
+ raiz dir dir dir dir dir dir dir dir dir dir dir dir SIM
