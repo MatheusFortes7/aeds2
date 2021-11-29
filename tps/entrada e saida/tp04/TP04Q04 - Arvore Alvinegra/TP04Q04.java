@@ -333,7 +333,7 @@ class Alvinegra {
             System.out.println(" NAO");
             resp = false;
 
-        } else if (elemento == i.elemento.getName()) {
+        } else if (elemento.compareTo(i.elemento.getName()) == 0) {
             System.out.println(" SIM");
             resp = true;
 
@@ -627,6 +627,7 @@ class TP04Q04 {
         for (i = 0; i < (n - 1); i++) {
             series = new Serie();
             series.readClass(entrada[i]);
+            //series.clone().printClass();
             arvore.inserir(series.clone());
         }
 
