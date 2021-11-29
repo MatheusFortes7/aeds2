@@ -2,6 +2,7 @@ import java.io.*;
 import java.io.FileReader;
 import java.util.Date;
 import java.io.RandomAccessFile;
+import java.lang.Exception;
 
 class Serie {
     // declaração dos atributos
@@ -441,7 +442,7 @@ class AVL {
      * @param x Elemento a ser inserido.
      * @throws Exception Se o elemento existir.
      */
-    public void inserir(Serie x) throws Exception {
+    public void inserir(Serie x) {
         raiz = inserir(x, raiz);
     }
 
@@ -453,7 +454,7 @@ class AVL {
      * @return No em analise, alterado ou nao.
      * @throws Exception Se o elemento existir.
      */
-    private No inserir(Serie x, No i) throws Exception {
+    private No inserir(Serie x, No i) {
         if (i == null) {
             i = new No(x);
 
@@ -464,7 +465,7 @@ class AVL {
             i.dir = inserir(x, i.dir);
 
         } else {
-            throw new Exception("Erro ao inserir!");
+            System.out.println("Erro ao inserir!");
         }
 
         return balancear(i);
@@ -476,7 +477,7 @@ class AVL {
      * @param x Elemento a ser removido.
      * @throws Exception Se nao encontrar elemento.
      */
-    public void remover(Serie x) throws Exception {
+    public void remover(Serie x) {
         raiz = remover(x, raiz);
     }
 
@@ -488,10 +489,10 @@ class AVL {
      * @return No em analise, alterado ou nao.
      * @throws Exception Se nao encontrar elemento.
      */
-    private No remover(Serie x, No i) throws Exception {
+    private No remover(Serie x, No i) {
 
         if (i == null) {
-            throw new Exception("Erro ao remover!");
+            System.out.println("Erro ao remover!");
 
         } else if (x.getName().compareTo(i.elemento.getName()) < 0) {
             i.esq = remover(x, i.esq);
@@ -537,7 +538,7 @@ class AVL {
         return j;
     }
 
-    private No balancear(No no) throws Exception {
+    private No balancear(No no) {
         if (no != null) {
             int fator = No.getNivel(no.dir) - no.getNivel(no.esq);
 
@@ -568,8 +569,7 @@ class AVL {
                 no = rotacionarDir(no);
 
             } else {
-                throw new Exception(
-                        "Erro no No(" + no.elemento + ") com fator de balanceamento (" + fator + ") invalido!");
+                System.out.println("Erro no No(" + no.elemento + ") com fator de balanceamento (" + fator + ") invalido!");
             }
         }
 
@@ -577,7 +577,7 @@ class AVL {
     }
 
     private No rotacionarDir(No no) {
-        System.out.println("Rotacionar DIR(" + no.elemento + ")");
+        //System.out.println("Rotacionar DIR(" + no.elemento + ")");
         No noEsq = no.esq;
         No noEsqDir = noEsq.dir;
 
@@ -591,7 +591,7 @@ class AVL {
     }
 
     private No rotacionarEsq(No no) {
-        System.out.println("Rotacionar ESQ(" + no.elemento + ")");
+        //System.out.println("Rotacionar ESQ(" + no.elemento + ")");
         No noDir = no.dir;
         No noDirEsq = noDir.esq;
 
@@ -631,7 +631,7 @@ class TP04Q03 {
         // Salva as series na lista
         for (i = 0; i < (n - 1); i++) {
             series.readClass(entrada[i]);
-            AVL.inserir(series.clone());
+            arvore.inserir(series.clone());
         }
 
         n = 0;
@@ -641,7 +641,7 @@ class TP04Q03 {
         } while (isFim(entrada[n++]) == false);
 
         for (i = 0; i < (n - 1); i++) {
-            System.out.print(" raiz");
+            System.out.print("raiz");
             arvore.pesquisar(entrada[i]);
         }
         // ! FIM DA LEITURA
