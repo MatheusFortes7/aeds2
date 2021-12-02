@@ -371,9 +371,15 @@ class TP04Q05 {
             series = new Serie();
             series.readClass(entrada[i]);
             //series.clone().printClass();
-            arvore.inserir(series.clone());
-            arvore.sort();
+            arvore.inserir(series.clone()); 
+            //for pra rodar printa o array
         }
+        Serie[] array = arvore.sort();
+        for(int j = 0; j < array.length; j++){
+            System.out.println(array[j].getName() + " " + array[j].getFormat() + " " + array[j].getDuration() + " " + array[j].getCountry() + " " + array[j].getLanguage()
+            + " " + array[j].getBroadcaster() + " " + array[j].getStreaming() + " " + array[j].getSeasons() + " " + array[j].getEpisodes());
+        }
+        
         // ! FIM DA LEITURA
     }
 }
