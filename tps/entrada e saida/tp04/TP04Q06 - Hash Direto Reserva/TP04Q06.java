@@ -274,37 +274,48 @@ class Serie {
 }
 
 class Hash {
-    int tabela[];
+    Serie tabela[];
     int m1, m2, m, reserva;
     int NULO = -1;
 
     public Hash() {
-        this(0);
+        this(21, 9);
     }
 
     public Hash(int m1, int m2) {
         this.m1 = m1;
         this.m2 = m2;
         this.m = m1 + m2;
-        this.tabela = new int[this.m];
+        this.tabela = new Serie[this.m];
         for (int i = 0; i < m1; i++) {
-            tabela[i] = NULO;
+            tabela[i] = null;
         }
         reserva = 0;
     }
 
-    public Serie h(Serie elemento) {
+    public int h(int elemento) {
         return elemento % m1;
+    }
+
+    public int getValorAscii(Serie elemento){
+        int ascii = 0;
+        String nome = elemento.getName();
+        
+        for(int i = 0; i < nome.length(); i++){
+            ascii = ascii + (int) nome.charAt(i);
+        }
+
+        return ascii;
     }
 
     public boolean inserir(Serie elemento) {
         boolean resp = false;
 
-        if (elemento != NULO) {
+        if (elemento != null) {
 
-            int pos = h(elemento);
+            int pos = h(getValorAscii(elemento));
 
-            if (tabela[pos] == NULO) {
+            if (tabela[pos] == null) {
                 tabela[pos] = elemento;
                 resp = true;
 
@@ -321,7 +332,7 @@ class Hash {
     public boolean pesquisar(Serie elemento) {
         boolean resp = false;
 
-        int pos = h(elemento);
+        int pos = h(getValorAscii(elemento));
 
         if (tabela[pos] == elemento) {
             resp = true;
