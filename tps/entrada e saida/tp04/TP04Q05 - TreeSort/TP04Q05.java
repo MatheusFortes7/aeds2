@@ -234,22 +234,22 @@ class Serie {
             // set país da série
             while (!br.readLine().contains("País de origem"))
                 ;
-            this.country = removeTags(br.readLine()).trim();
+            this.country = removeTags(br.readLine());
 
             // set idioma da série
             while (!br.readLine().contains("Idioma original"))
                 ;
-            this.language = removeTags(br.readLine()).trim();
+            this.language = removeTags(br.readLine());
 
             // set emissora da série
             while (!br.readLine().contains("Emissora de televisão"))
                 ;
-            this.broadcaster = removeTags(br.readLine()).trim();
+            this.broadcaster = removeTags(br.readLine());
 
             // set transmissão original da série
             while (!br.readLine().contains("Transmissão original"))
                 ;
-            this.streaming = removeTags(br.readLine()).trim();
+            this.streaming = removeTags(br.readLine());
 
             // set temporadas da série
             while (!br.readLine().contains("N.º de temporadas"))
