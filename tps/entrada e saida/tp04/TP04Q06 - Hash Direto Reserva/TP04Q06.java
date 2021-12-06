@@ -297,11 +297,11 @@ class Hash {
         return elemento % m1;
     }
 
-    public int getValorAscii(Serie elemento){
+    public int getValorAscii(Serie elemento) {
         int ascii = 0;
         String nome = elemento.getName();
-        
-        for(int i = 0; i < nome.length(); i++){
+
+        for (int i = 0; i < nome.length(); i++) {
             ascii = ascii + (int) nome.charAt(i);
         }
 
@@ -329,22 +329,48 @@ class Hash {
         return resp;
     }
 
-    public boolean pesquisar(Serie elemento) {
-        boolean resp = false;
-
-        int pos = h(getValorAscii(elemento));
-
-        if (tabela[pos] == elemento) {
-            resp = true;
-
-        } else {
-            for (int i = 0; i < reserva; i++) {
-                if (tabela[m1 + i] == elemento) {
-                    resp = true;
-                    i = reserva;
-                }
+    public void mostrar() {
+        for (int i = 0; i < tabela.length; i++) {
+            if (tabela[i] != null) {
+                System.out.println(tabela[i].getName());
             }
         }
+    }
+
+    public boolean pesquisar(String elemento) {
+        boolean resp = false;
+        int ascii = 0;
+
+        for (int i = 0; i < elemento.length(); i++) {
+            ascii = ascii + (int) elemento.charAt(i);
+        }
+        int pos = h(ascii);
+        //System.out.println(pos);
+        /*
+         * System.out.println("------");
+         * System.out.println(elemento);
+         * System.out.println(ascii);
+         * System.out.println(pos);
+         * System.out.println("------");
+         */
+            if (tabela[pos] != null && tabela[pos].getName().compareTo(elemento) == 0) {
+                resp = true;
+                
+            } else {
+                for (int i = 0; i < reserva; i++) {
+                    if (tabela[m1 + i].getName().compareTo(elemento) == 0) {
+                        resp = true;
+                        i = reserva;
+                        
+                    }
+                }
+            }
+        if(resp == true){
+            System.out.println(" SIM");
+        } else {
+            System.out.println(" NAO");
+        }
+        
         return resp;
     }
 
@@ -379,8 +405,10 @@ class TP04Q06 {
             series = new Serie();
             series.readClass(entrada[i]);
             // series.clone().printClass();
-            arvore.inserir(series.clone());
+            hash.inserir(series.clone());
+
         }
+        //hash.mostrar();
 
         n = 0;
         // Recebe a primeira parte da entrada
@@ -389,8 +417,7 @@ class TP04Q06 {
         } while (isFim(entrada[n++]) == false);
 
         for (i = 0; i < (n - 1); i++) {
-            System.out.print("raiz");
-            arvore.pesquisar(entrada[i]);
+            hash.pesquisar(entrada[i]);
         }
         // ! FIM DA LEITURA
     }
