@@ -206,7 +206,6 @@ class Serie {
             }
         }
         return resp.substring(0, resp.length() - 5); // retorno da substring resp retirando os 5 últimos caracteres
-                                                     // relacionados à extensão do arquivo
     }
 
     // método para leitura do arquivo .html e tratamento das linhas
@@ -219,7 +218,7 @@ class Serie {
             BufferedReader br = new BufferedReader(fileReader); // declaração do bufferedReader para leitura do arquivo
 
             // set nome da série
-            this.name = searchName(fileName);
+            this.name = searchName(fileName).trim();
 
             // set Formato da série
             while (!br.readLine().contains("Formato"))
@@ -279,7 +278,7 @@ class Hash {
     int NULO = -1;
 
     public Hash() {
-        this(21);
+        this(30);
     }
 
     public Hash(int m) {
@@ -404,7 +403,7 @@ class TP04Q07 {
         } while (isFim(entrada[n++]) == false);
 
         for (i = 0; i < (n - 1); i++) {
-            hash.pesquisar(entrada[i]);
+            hash.pesquisar(entrada[i].trim());
         }
         // ! FIM DA LEITURA
     }

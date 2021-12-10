@@ -3,10 +3,10 @@
  NAO
  NAO
  SIM
- NAO
- NAO
- NAO
  SIM
  NAO
+ SIM
+ SIM
+ SIM
  NAO
  NAO
