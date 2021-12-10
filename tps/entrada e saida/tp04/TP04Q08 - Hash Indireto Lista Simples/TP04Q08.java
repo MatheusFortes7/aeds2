@@ -397,8 +397,10 @@ class Lista {
 			//throw new Exception("Erro ao inserir posicao (" + pos + " / tamanho = " + tamanho + ") invalida!");
       } else if (pos == 0){
          inserirInicio(x);
+         TP04Q08.contador++;
       } else if (pos == tamanho){
          inserirFim(x);
+         TP04Q08.contador++;
       } else {
 		   // Caminhar ate a posicao anterior a insercao
          Celula i = primeiro;
@@ -431,8 +433,10 @@ class Lista {
 			//throw new Exception("Erro ao remover (posicao " + pos + " / " + tamanho + " invalida!");
       } else if (pos == 0){
          resp = removerInicio();
+         TP04Q08.contador++;
       } else if (pos == tamanho - 1){
          resp = removerFim();
+         TP04Q08.contador++;
       } else {
 		   // Caminhar ate a posicao anterior a insercao
          Celula i = primeiro;
@@ -467,14 +471,17 @@ class Lista {
 		for (Celula i = primeiro.prox; i != null; i = i.prox) {
          if(i.elemento.getName().compareTo(x) == 0){
             resp = true;
+            TP04Q08.contador++;
             i = ultimo;
          }
 		}
 
         if(resp == true){
             System.out.println(" SIM");
+            TP04Q08.contador++;
         } else {
             System.out.println(" NAO");
+            TP04Q08.contador++;
         }
 
 		return resp;
@@ -498,6 +505,7 @@ class Lista {
         Serie temp = null;
         if (primeiro != ultimo) {
             temp = primeiro.prox.elemento;
+            TP04Q08.contador++;
         }
         return temp;
     }
@@ -512,6 +520,7 @@ class Lista {
             Celula temp = primeiro;
             for (int i = 0; i < index; i++, temp = temp.prox)
                 ;
+                TP04Q08.contador++;
             resp = temp.elemento;
         } else {
             MyIO.println("ERRO - Get Index com indice " + index + " não permitido");
@@ -535,11 +544,13 @@ class HashIndiretoLista {
        this.tamanho = tamanho;
        tabela = new Lista[tamanho];
        for(int i = 0; i < tamanho; i++){
+        TP04Q08.contador++;
           tabela[i] = new Lista();
        }
     }
  
     public int h(int elemento){
+        TP04Q08.contador++;
        return elemento % tamanho;
     }
  
@@ -547,6 +558,7 @@ class HashIndiretoLista {
         int ascii = 0;
 
         for (int i = 0; i < elemento.length(); i++) {
+            TP04Q08.contador++;
             ascii = ascii + (int) elemento.charAt(i);
         }
         int pos = h(ascii);
@@ -558,6 +570,7 @@ class HashIndiretoLista {
         String nome = elemento.getName();
 
         for (int i = 0; i < nome.length(); i++) {
+            TP04Q08.contador++;
             ascii = ascii + (int) nome.charAt(i);
         }
 
@@ -566,6 +579,7 @@ class HashIndiretoLista {
 
     public void inserirInicio (Serie elemento){
        int pos = h(getValorAscii(elemento));
+       TP04Q08.contador++;
        tabela[pos].inserirInicio(elemento);
     }
  
@@ -590,7 +604,10 @@ class TP04Q08 {
         Serie series = new Serie(); // Declaracao de serie
         HashIndiretoLista hash = new HashIndiretoLista();
         int n = 0, i, stop;
+        long inicio=0, fim=0;
+        double diferenca=0;
 
+        inicio = now();
         // ! INICIO DA LEITURA
         // Recebe a primeira parte da entrada
         do {
@@ -599,6 +616,7 @@ class TP04Q08 {
         // Salva as series na lista
         for (i = 0; i < (n - 1); i++) {
             series = new Serie();
+            TP04Q08.contador++;
             series.readClass(entrada[i]);
             // series.clone().printClass();
             hash.inserirInicio(series.clone());
@@ -613,8 +631,17 @@ class TP04Q08 {
         } while (isFim(entrada[n++]) == false);
 
         for (i = 0; i < (n - 1); i++) {
+            TP04Q08.contador++;
             hash.pesquisar(entrada[i]);
         }
         // ! FIM DA LEITURA
+        fim = now();
+        diferenca = (fim - inicio) / 1000.0;
+
+        RandomAccessFile Arq = new RandomAccessFile("727453_hashIndireta.txt", "rw");
+
+        Arq.writeChars("727453" + "\t" + diferenca + "\t" + TP04Q08.contador);
+
+        Arq.close();
     }
 }

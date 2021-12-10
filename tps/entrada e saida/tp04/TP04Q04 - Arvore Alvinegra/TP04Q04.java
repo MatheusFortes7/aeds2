@@ -331,19 +331,23 @@ class Alvinegra {
         boolean resp;
         if (i == null) {
             System.out.println(" NAO");
+            TP04Q04.contador++;
             resp = false;
 
         } else if (elemento.compareTo(i.elemento.getName()) == 0) {
             System.out.println(" SIM");
+            TP04Q04.contador++;
             resp = true;
 
         } else if (elemento.compareTo(i.elemento.getName()) < 0) {
             System.out.print(" esq");
             resp = pesquisar(elemento, i.esq);
+            TP04Q04.contador++;
 
         } else {
             System.out.print(" dir");
             resp = pesquisar(elemento, i.dir);
+            TP04Q04.contador++;
         }
         return resp;
     }
@@ -442,16 +446,19 @@ class Alvinegra {
 
             if (elemento.getName().compareTo(raiz.elemento.getName()) < 0) {
                 raiz.esq = new NoAN(elemento);
+                TP04Q04.contador++;
                 //System.out.println("Antes, dois elementos(A). Agora, raiz(" + raiz.elemento + "), esq ("+ raiz.esq.elemento + ") e dir(" + raiz.dir.elemento + ").");
 
             } else if (elemento.getName().compareTo(raiz.dir.elemento.getName()) < 0) {
                 raiz.esq = new NoAN(raiz.elemento);
+                TP04Q04.contador++;
                 raiz.elemento = elemento;
                 //System.out.println("Antes, dois elementos(B). Agora, raiz(" + raiz.elemento + "), esq ("+ raiz.esq.elemento + ") e dir(" + raiz.dir.elemento + ").");
 
             } else {
                 raiz.esq = new NoAN(raiz.elemento);
                 raiz.elemento = raiz.dir.elemento;
+                TP04Q04.contador++;
                 raiz.dir.elemento = elemento;
                 //System.out.println("Antes, dois elementos(C). Agora, raiz(" + raiz.elemento + "), esq ("+ raiz.esq.elemento + ") e dir(" + raiz.dir.elemento + ").");
             }
@@ -466,11 +473,13 @@ class Alvinegra {
                 //System.out.println("Antes, dois elementos(D). Agora, raiz(" + raiz.elemento + "), esq ("+ raiz.esq.elemento + ") e dir(" + raiz.dir.elemento + ").");
             } else if (elemento.getName().compareTo(raiz.esq.elemento.getName()) > 0) {
                 raiz.dir = new NoAN(raiz.elemento);
+                TP04Q04.contador++;
                 raiz.elemento = elemento;
                 //System.out.println("Antes, dois elementos(E). Agora, raiz(" + raiz.elemento + "), esq ("+ raiz.esq.elemento + ") e dir(" + raiz.dir.elemento + ").");
             } else {
                 raiz.dir = new NoAN(raiz.elemento);
                 raiz.elemento = raiz.esq.elemento;
+                TP04Q04.contador++;
                 raiz.esq.elemento = elemento;
                 //System.out.println("Antes, dois elementos(F). Agora, raiz(" + raiz.elemento + "), esq ("+ raiz.esq.elemento + ") e dir(" + raiz.dir.elemento + ").");
             }
@@ -495,24 +504,31 @@ class Alvinegra {
             if (pai.elemento.getName().compareTo(avo.elemento.getName()) > 0) { // rotacao a esquerda ou direita-esquerda
                 if (i.elemento.getName().compareTo(pai.elemento.getName()) > 0) {
                     avo = rotacaoEsq(avo);
+                    TP04Q04.contador++;
                 } else {
                     avo = rotacaoDirEsq(avo);
+                    TP04Q04.contador++;
                 }
 
             } else { // rotacao a direita ou esquerda-direita
                 if (i.elemento.getName().compareTo(pai.elemento.getName()) < 0) {
                     avo = rotacaoDir(avo);
+                    TP04Q04.contador++;
                 } else {
                     avo = rotacaoEsqDir(avo);
+                    TP04Q04.contador++;
                 }
             }
 
             if (bisavo == null) {
                 raiz = avo;
+                TP04Q04.contador++;
             } else if (avo.elemento.getName().compareTo(bisavo.elemento.getName()) < 0) {
                 bisavo.esq = avo;
+                TP04Q04.contador++;
             } else {
                 bisavo.dir = avo;
+                TP04Q04.contador++;
             }
 
             // reestabelecer as cores apos a rotacao
@@ -536,12 +552,15 @@ class Alvinegra {
 
             if (elemento.getName().compareTo(pai.elemento.getName()) < 0) {
                 i = pai.esq = new NoAN(elemento, true);
+                TP04Q04.contador++;
             } else {
                 i = pai.dir = new NoAN(elemento, true);
+                TP04Q04.contador++;
             }
 
             if (pai.cor == true) {
                 balancear(bisavo, avo, pai, i);
+                TP04Q04.contador++;
             }
 
         } else {
@@ -554,13 +573,16 @@ class Alvinegra {
                     i.cor = false;
                 } else if (pai.cor == true) {
                     balancear(bisavo, avo, pai, i);
+                    TP04Q04.contador++;
                 }
             }
 
             if (elemento.getName().compareTo(i.elemento.getName()) < 0) {
                 inserir(elemento, avo, pai, i, i.esq);
+                TP04Q04.contador++;
             } else if (elemento.getName().compareTo(i.elemento.getName()) > 0) {
                 inserir(elemento, avo, pai, i, i.dir);
+                TP04Q04.contador++;
             } else {
                 System.out.println("Erro inserir (elemento repetido)!");
             }
@@ -574,7 +596,7 @@ class Alvinegra {
 
         noEsq.dir = no;
         no.esq = noEsqDir;
-
+        TP04Q04.contador++;
         return noEsq;
     }
 
@@ -582,7 +604,7 @@ class Alvinegra {
         // System.out.println("Rotacao ESQ(" + no.elemento + ")");
         NoAN noDir = no.dir;
         NoAN noDirEsq = noDir.esq;
-
+        TP04Q04.contador++;
         noDir.esq = no;
         no.dir = noDirEsq;
         return noDir;
@@ -590,11 +612,13 @@ class Alvinegra {
 
     private NoAN rotacaoDirEsq(NoAN no) {
         no.dir = rotacaoDir(no.dir);
+        TP04Q04.contador++;
         return rotacaoEsq(no);
     }
 
     private NoAN rotacaoEsqDir(NoAN no) {
         no.esq = rotacaoEsq(no.esq);
+        TP04Q04.contador++;
         return rotacaoDir(no);
     }
 }
@@ -617,7 +641,10 @@ class TP04Q04 {
         Serie series = new Serie(); // Declaracao de serie
         Alvinegra arvore = new Alvinegra();
         int n = 0, i, stop;
+        long inicio=0, fim=0;
+        double diferenca=0;
 
+        inicio = now();
         // ! INICIO DA LEITURA
         // Recebe a primeira parte da entrada
         do {
@@ -629,6 +656,7 @@ class TP04Q04 {
             series.readClass(entrada[i]);
             //series.clone().printClass();
             arvore.inserir(series.clone());
+            TP04Q04.contador++;
         }
 
         n = 0;
@@ -640,7 +668,16 @@ class TP04Q04 {
         for (i = 0; i < (n - 1); i++) {
             System.out.print("raiz");
             arvore.pesquisar(entrada[i]);
+            TP04Q04.contador++;
         }
         // ! FIM DA LEITURA
+        fim = now();
+        diferenca = (fim - inicio) / 1000.0;
+
+        RandomAccessFile Arq = new RandomAccessFile("727453_arvoreAlvinegra.txt", "rw");
+
+        Arq.writeChars("727453" + "\t" + diferenca + "\t" + TP04Q04.contador);
+
+        Arq.close();
     }
 }

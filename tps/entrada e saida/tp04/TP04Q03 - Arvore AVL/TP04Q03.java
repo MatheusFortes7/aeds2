@@ -356,14 +356,17 @@ class AVL {
 
         } else if (x.compareTo(i.elemento.getName()) == 0) {
             System.out.println(" SIM");
+            TP04Q03.contador++;
             resp = true;
 
         } else if (x.compareTo(i.elemento.getName()) < 0) {
             System.out.print(" esq");
+            TP04Q03.contador++;
             resp = pesquisar(x, i.esq);
 
         } else {
             System.out.print(" dir");
+            TP04Q03.contador++;
             resp = pesquisar(x, i.dir);
         }
         return resp;
@@ -460,10 +463,10 @@ class AVL {
 
         } else if (x.getName().compareTo(i.elemento.getName()) < 0) {
             i.esq = inserir(x, i.esq);
-
+            TP04Q03.contador++;
         } else if (x.getName().compareTo(i.elemento.getName()) > 0) {
             i.dir = inserir(x, i.dir);
-
+            TP04Q03.contador++;
         } else {
             System.out.println("Erro ao inserir!");
         }
@@ -493,21 +496,21 @@ class AVL {
 
         if (i == null) {
             System.out.println("Erro ao remover!");
-
+            TP04Q03.contador++;
         } else if (x.getName().compareTo(i.elemento.getName()) < 0) {
             i.esq = remover(x, i.esq);
-
+            TP04Q03.contador++;
         } else if (x.getName().compareTo(i.elemento.getName()) > 0) {
             i.dir = remover(x, i.dir);
-
+            TP04Q03.contador++;
             // Sem no a direita.
         } else if (i.dir == null) {
             i = i.esq;
-
+            TP04Q03.contador++;
             // Sem no a esquerda.
         } else if (i.esq == null) {
             i = i.dir;
-
+            TP04Q03.contador++;
             // No a esquerda e no a direita.
         } else {
             i.esq = maiorEsq(i, i.esq);
@@ -529,10 +532,11 @@ class AVL {
         if (j.dir == null) {
             i.elemento = j.elemento; // Substitui i por j.
             j = j.esq; // Substitui j por j.ESQ.
-
+            TP04Q03.contador++;
             // Existe no a direita.
         } else {
             // Caminha para direita.
+            TP04Q03.contador++;
             j.dir = maiorEsq(i, j.dir);
         }
         return j;
@@ -545,7 +549,7 @@ class AVL {
             // Se balanceada
             if (Math.abs(fator) <= 1) {
                 no.setNivel();
-
+                TP04Q03.contador++;
                 // Se desbalanceada para a direita
             } else if (fator == 2) {
 
@@ -554,6 +558,7 @@ class AVL {
                 // Se o filho a direita tambem estiver desbalanceado
                 if (fatorFilhoDir == -1) {
                     no.dir = rotacionarDir(no.dir);
+                    TP04Q03.contador++;
                 }
                 no = rotacionarEsq(no);
 
@@ -565,6 +570,7 @@ class AVL {
                 // Se o filho a esquerda tambem estiver desbalanceado
                 if (fatorFilhoEsq == 1) {
                     no.esq = rotacionarEsq(no.esq);
+                    TP04Q03.contador++;
                 }
                 no = rotacionarDir(no);
 
@@ -622,7 +628,10 @@ class TP04Q03 {
         Serie series = new Serie(); // Declaracao de serie
         AVL arvore = new AVL();
         int n = 0, i, stop;
+        long inicio=0, fim=0;
+        double diferenca=0;
 
+        inicio = now();
         // ! INICIO DA LEITURA
         // Recebe a primeira parte da entrada
         do {
@@ -632,6 +641,7 @@ class TP04Q03 {
         for (i = 0; i < (n - 1); i++) {
             series.readClass(entrada[i]);
             arvore.inserir(series.clone());
+            TP04Q03.contador++;
         }
 
         n = 0;
@@ -643,7 +653,16 @@ class TP04Q03 {
         for (i = 0; i < (n - 1); i++) {
             System.out.print("raiz");
             arvore.pesquisar(entrada[i]);
+            TP04Q03.contador++;
         }
         // ! FIM DA LEITURA
+        fim = now();
+        diferenca = (fim - inicio) / 1000.0;
+
+        RandomAccessFile Arq = new RandomAccessFile("727453_arvoreAVL.txt", "rw");
+
+        Arq.writeChars("727453" + "\t" + diferenca + "\t" + TP04Q03.contador);
+
+        Arq.close();
     }
 }

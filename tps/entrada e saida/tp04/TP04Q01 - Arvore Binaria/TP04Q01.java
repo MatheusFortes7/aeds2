@@ -296,16 +296,16 @@ class ArvoreBinaria {
 			System.out.println(" NAO");
             //System.out.println(x);
             resp = false;
-
+            TP04Q01.contador++;
 		} else if (x.compareTo(i.elemento.getName()) == 0) {
 			System.out.println(" SIM");
             resp = true;
-
+            TP04Q01.contador++;
             
 		} else if (x.compareTo(i.elemento.getName()) < 0) {
 			System.out.print(" esq");
             resp = pesquisar(x, i.esq);
-
+            TP04Q01.contador++;
 		} else {
             System.out.print(" dir");
 			resp = pesquisar(x, i.dir);
@@ -403,11 +403,11 @@ class ArvoreBinaria {
 
 		} else if (x.getName().compareTo(i.elemento.getName()) < 0) {
 			i.esq = inserir(x, i.esq);
-
+            TP04Q01.contador++;
 		} else if (x.getName().compareTo(i.elemento.getName()) > 0) {
 			i.dir = inserir(x, i.dir);
-
-		} else {
+            TP04Q01.contador++;
+		} else {    
 			
 		}
 
@@ -439,18 +439,18 @@ class ArvoreBinaria {
 
 		} else if (x.compareTo(i.elemento.getName()) < 0) {
 			i.esq = remover(x, i.esq);
-
+            TP04Q01.contador++;
 		} else if (x.compareTo(i.elemento.getName()) > 0) {
 			i.dir = remover(x, i.dir);
-
+            TP04Q01.contador++;
 			// Sem no a direita.
 		} else if (i.dir == null) {
 			i = i.esq;
-
+            TP04Q01.contador++;
 			// Sem no a esquerda.
 		} else if (i.esq == null) {
 			i = i.dir;
-
+            TP04Q01.contador++;
 			// No a esquerda e no a direita.
 		} else {
 			i.esq = maiorEsq(i, i.esq);
@@ -470,13 +470,18 @@ class ArvoreBinaria {
 			throw new Exception("Erro ao remover2!");
 		} else if (x.getName().compareTo(raiz.elemento.getName()) < 0) {
 			remover2(x, raiz.esq, raiz);
+            TP04Q01.contador++;
 		} else if (x.getName().compareTo(raiz.elemento.getName()) > 0) {
 			remover2(x, raiz.dir, raiz);
+            TP04Q01.contador++;
 		} else if (raiz.dir == null) {
 			raiz = raiz.esq;
+            TP04Q01.contador++;
 		} else if (raiz.esq == null) {
 			raiz = raiz.dir;
+            TP04Q01.contador++;
 		} else {
+            TP04Q01.contador++;
 			raiz.esq = maiorEsq(raiz, raiz.esq);
 		}
 	}
@@ -494,13 +499,18 @@ class ArvoreBinaria {
 			throw new Exception("Erro ao remover2!");
 		} else if (x.getName().compareTo(i.elemento.getName()) < 0) {
 			remover2(x, i.esq, i);
+            TP04Q01.contador++;
 		} else if (x.getName().compareTo(i.elemento.getName()) > 0) {
 			remover2(x, i.dir, i);
+            TP04Q01.contador++;
 		} else if (i.dir == null) {
 			pai = i.esq;
+            TP04Q01.contador++;
 		} else if (i.esq == null) {
 			pai = i.dir;
+            TP04Q01.contador++;
 		} else {
+            TP04Q01.contador++;
 			i.esq = maiorEsq(i, i.esq);
 		}
 	}
@@ -516,6 +526,7 @@ class ArvoreBinaria {
 		} else {
          // Caminha para direita.
 			j.dir = maiorEsq(i, j.dir);
+            TP04Q01.contador++;
 		}
 		return j;
 	}    
@@ -527,10 +538,13 @@ class ArvoreBinaria {
 	private static boolean igual(No i1, No i2) {
 		boolean resp;
 		if (i1 != null && i2 != null) {
-			resp = (i1.elemento == i2.elemento) && igual(i1.esq, i2.esq) && igual(i1.dir, i2.dir);
+			TP04Q01.contador++;
+            resp = (i1.elemento == i2.elemento) && igual(i1.esq, i2.esq) && igual(i1.dir, i2.dir);
 		} else if (i1 == null && i2 == null) {
 			resp = true;
+            TP04Q01.contador++;
 		} else {
+            TP04Q01.contador++;
 			resp = false;
 		}
 		return resp;
@@ -571,7 +585,10 @@ class TP04Q01{
         Serie series = new Serie(); // Declaracao de serie
         ArvoreBinaria arvore = new ArvoreBinaria();
         int n = 0, i, stop;
+        long inicio=0, fim=0;
+        double diferenca=0;
 
+        inicio = now();
         //! INICIO DA LEITURA
         // Recebe a primeira parte da entrada
         do {
@@ -581,6 +598,7 @@ class TP04Q01{
         for (i = 0; i < (n - 1); i++) {
             series.readClass(entrada[i]);
             arvore.inserir(series.clone());
+            TP04Q01.contador++;
         }
 
         // Recebe a segunda parte da entrada
@@ -605,7 +623,16 @@ class TP04Q01{
         for (i = 0; i < (n - 1); i++) {
             System.out.print(" raiz");
             arvore.pesquisar(entrada[i]);
+            TP04Q01.contador++;
         }
         //! FIM DA LEITURA
+        fim = now();
+        diferenca = (fim - inicio) / 1000.0;
+
+        RandomAccessFile Arq = new RandomAccessFile("727453_arvoreBinária.txt", "rw");
+
+        Arq.writeChars("727453" + "\t" + diferenca + "\t" + TP04Q01.contador);
+
+        Arq.close();
     }
 }

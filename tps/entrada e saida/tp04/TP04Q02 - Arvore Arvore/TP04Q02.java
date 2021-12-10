@@ -377,13 +377,13 @@ class ArvoreArvore {
 
         if (i == null) {
             i = new No(x);
-
+            TP04Q02.contador++;
         } else if (x < i.elemento) {
             i.esq = inserir(x, i.esq);
-
+            TP04Q02.contador++;
         } else if (x > i.elemento) {
             i.dir = inserir(x, i.dir);
-
+            TP04Q02.contador++;
         } else {
 
         }
@@ -398,13 +398,13 @@ class ArvoreArvore {
         if (i == null) {
             // System.out.println(s.getName());
             System.out.println("Erro ao inserir: caractere invalido!");
-
+            TP04Q02.contador++;
         } else if (s.getName().charAt(0) < i.elemento) {
             inserir(s, i.esq);
-
+            TP04Q02.contador++;
         } else if (s.getName().charAt(0) > i.elemento) {
             inserir(s, i.dir);
-
+            TP04Q02.contador++;
         } else {
             i.outro = inserir(s, i.outro);
         }
@@ -413,13 +413,13 @@ class ArvoreArvore {
     private No2 inserir(Serie s, No2 i) {
         if (i == null) {
             i = new No2(s);
-
+            TP04Q02.contador++;
         } else if (s.getName().compareTo(i.elemento.getName()) < 0) {
             i.esq = inserir(s, i.esq);
-
+            TP04Q02.contador++;
         } else if (s.getName().compareTo(i.elemento.getName()) > 0) {
             i.dir = inserir(s, i.dir);
-
+            TP04Q02.contador++;
         } else {
             System.out.println("Erro ao inserir: elemento existente!");
         }
@@ -437,6 +437,7 @@ class ArvoreArvore {
             System.out.println("Letra: " + i.elemento);
             // mostrar(i.outro);
             mostrar(i.dir);
+            TP04Q02.contador++;
         }
     }
 
@@ -445,6 +446,7 @@ class ArvoreArvore {
             mostrar(i.esq);
             System.out.println(i.elemento);
             mostrar(i.dir);
+            TP04Q02.contador++;
         }
     }
 
@@ -458,12 +460,15 @@ class ArvoreArvore {
             resp = false;
         } else if(pesquisarSegundaArvore(no.outro, x)){
             resp = true;
+            TP04Q02.contador++;
         } else {
             System.out.print("esq ");
             resp = pesquisar(no.esq, x);
+            TP04Q02.contador++;
             if(resp == false){
                 System.out.print("dir ");
                 resp = pesquisar(no.dir, x);
+                TP04Q02.contador++;
             }
         }
         return resp;
@@ -473,14 +478,18 @@ class ArvoreArvore {
         boolean resp;
         if (no == null) {
             resp = false;
+            TP04Q02.contador++;
         } else if(no.elemento.getName().compareTo(x) == 0){
             resp = true;
+            TP04Q02.contador++;
         } else {
             System.out.print("ESQ ");
             resp = pesquisarSegundaArvore(no.esq, x);
+            TP04Q02.contador++;
             if(resp == false){
                 System.out.print("DIR ");
                 resp = pesquisarSegundaArvore(no.dir, x);
+                TP04Q02.contador++;
             }
         }
         return resp;
@@ -506,7 +515,10 @@ class TP04Q02 {
         Serie series = new Serie(); // Declaracao de serie
         ArvoreArvore arvore = new ArvoreArvore();
         int n = 0, i, stop;
+        long inicio=0, fim=0;
+        double diferenca=0;
 
+        inicio = now();
         // ! INICIO DA LEITURA
         // Recebe a primeira parte da entrada
         do {
@@ -516,6 +528,7 @@ class TP04Q02 {
         for (i = 0; i < (n - 1); i++) {
             series = new Serie();
             series.readClass(entrada[i]);
+            TP04Q02.contador++;
             arvore.inserir(series.clone());
         }
 
@@ -527,6 +540,7 @@ class TP04Q02 {
 
         for (i = 0; i < (n - 1); i++) {
             System.out.print("raiz ");
+            TP04Q02.contador++;
             if (arvore.pesquisar(entrada[i]) == true) {
                 System.out.println(" SIM");
             } else {
@@ -534,5 +548,13 @@ class TP04Q02 {
             }
         }
         // ! FIM DA LEITURA
+        fim = now();
+        diferenca = (fim - inicio) / 1000.0;
+
+        RandomAccessFile Arq = new RandomAccessFile("727453_arvoreArvore.txt", "rw");
+
+        Arq.writeChars("727453" + "\t" + diferenca + "\t" + TP04Q02.contador);
+
+        Arq.close();
     }
 }

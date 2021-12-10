@@ -286,6 +286,7 @@ class Hash {
         this.tabela = new Serie[this.m];
         for (int i = 0; i < m; i++) {
             tabela[i] = null;
+            TP04Q07.contador++;
         }
     }
 
@@ -303,6 +304,7 @@ class Hash {
 
         for (int i = 0; i < nome.length(); i++) {
             ascii = ascii + (int) nome.charAt(i);
+            TP04Q07.contador++;
         }
 
         return ascii;
@@ -317,6 +319,7 @@ class Hash {
 
             if (tabela[pos] == null) {
                 tabela[pos] = elemento;
+                TP04Q07.contador++;
                 resp = true;
 
             } else {
@@ -325,6 +328,7 @@ class Hash {
 
                 if (tabela[pos] == null) {
                     tabela[pos] = elemento;
+                    TP04Q07.contador++;
                     resp = true;
                 }
             }
@@ -339,15 +343,18 @@ class Hash {
 
         for (int i = 0; i < elemento.length(); i++) {
             ascii = ascii + (int) elemento.charAt(i);
+            TP04Q07.contador++;
         }
         int pos = h(ascii);
 
         if (tabela[pos] != null && tabela[pos].getName().compareTo(elemento) == 0) {
+            TP04Q07.contador++;
             resp = true;
 
         } else {
             pos = reh(ascii);
             if (tabela[pos] != null && tabela[pos].getName().compareTo(elemento) == 0) {
+                TP04Q07.contador++;
                 resp = true;
             }
         }
@@ -380,7 +387,10 @@ class TP04Q07 {
         Serie series = new Serie(); // Declaracao de serie
         Hash hash = new Hash();
         int n = 0, i, stop;
+        long inicio=0, fim=0;
+        double diferenca=0;
 
+        inicio = now();
         // ! INICIO DA LEITURA
         // Recebe a primeira parte da entrada
         do {
@@ -390,6 +400,7 @@ class TP04Q07 {
         for (i = 0; i < (n - 1); i++) {
             series = new Serie();
             series.readClass(entrada[i]);
+            TP04Q07.contador++;
             // series.clone().printClass();
             hash.inserir(series.clone());
 
@@ -404,7 +415,16 @@ class TP04Q07 {
 
         for (i = 0; i < (n - 1); i++) {
             hash.pesquisar(entrada[i].trim());
+            TP04Q07.contador++;
         }
         // ! FIM DA LEITURA
+        fim = now();
+        diferenca = (fim - inicio) / 1000.0;
+
+        RandomAccessFile Arq = new RandomAccessFile("727453_hashReshash.txt", "rw");
+
+        Arq.writeChars("727453" + "\t" + diferenca + "\t" + TP04Q07.contador);
+
+        Arq.close();
     }
 }

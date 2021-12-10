@@ -318,6 +318,7 @@ class TreeSort {
         if (i != null) {
             sort(i.esq, array);
             array[n++] = i.elemento;
+            TP04Q05.contador++;
             sort(i.dir, array);
         }
     }
@@ -330,12 +331,14 @@ class TreeSort {
     private No inserir(Serie x, No i) {
         if (i == null) {
             i = new No(x);
-
+            TP04Q05.contador++;
         } else if (x.getName().compareTo(i.elemento.getName()) < 0) {
             i.esq = inserir(x, i.esq);
+            TP04Q05.contador++;
 
         } else if (x.getName().compareTo(i.elemento.getName()) >= 0) {
             i.dir = inserir(x, i.dir);
+            TP04Q05.contador++;
         }
 
         return i;
@@ -360,7 +363,10 @@ class TP04Q05 {
         Serie series = new Serie(); // Declaracao de serie
         TreeSort arvore = new TreeSort();
         int n = 0, i, stop;
+        long inicio=0, fim=0;
+        double diferenca=0;
 
+        inicio = now();
         // ! INICIO DA LEITURA
         // Recebe a primeira parte da entrada
         do {
@@ -371,7 +377,8 @@ class TP04Q05 {
             series = new Serie();
             series.readClass(entrada[i]);
             //series.clone().printClass();
-            arvore.inserir(series.clone()); 
+            arvore.inserir(series.clone());
+            TP04Q05.contador++;
             //for pra rodar printa o array
         }
         Serie[] array = arvore.sort();
@@ -381,5 +388,13 @@ class TP04Q05 {
         }
         
         // ! FIM DA LEITURA
+        fim = now();
+        diferenca = (fim - inicio) / 1000.0;
+
+        RandomAccessFile Arq = new RandomAccessFile("727453_treesort.txt", "rw");
+
+        Arq.writeChars("727453" + "\t" + diferenca + "\t" + TP04Q05.contador);
+
+        Arq.close();
     }
 }
