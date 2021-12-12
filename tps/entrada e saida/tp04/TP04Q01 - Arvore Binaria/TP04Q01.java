@@ -553,7 +553,7 @@ class ArvoreBinaria {
 
 
 
-class TP04Q01{
+class TP04Q01 {
     public static int contador = 0; 
     //Salvando os itens no arra nao dara certo pois so ordenara os paises, e nao a linha inteira
     
@@ -580,7 +580,8 @@ class TP04Q01{
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception{
+        
         String[] entrada = new String[1000];
         Serie series = new Serie(); // Declaracao de serie
         ArvoreBinaria arvore = new ArvoreBinaria();
@@ -626,10 +627,11 @@ class TP04Q01{
             TP04Q01.contador++;
         }
         //! FIM DA LEITURA
+        
         fim = now();
         diferenca = (fim - inicio) / 1000.0;
 
-        RandomAccessFile Arq = new RandomAccessFile("727453_arvoreBinária.txt", "rw");
+        RandomAccessFile Arq = new RandomAccessFile("727453_arvoreBinaria.txt", "rw");
 
         Arq.writeChars("727453" + "\t" + diferenca + "\t" + TP04Q01.contador);
 

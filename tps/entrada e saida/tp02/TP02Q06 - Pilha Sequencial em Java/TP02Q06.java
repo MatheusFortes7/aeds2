@@ -190,31 +190,47 @@ class Serie {
             FileReader fileReader = new FileReader(arquivo);
             BufferedReader br = new BufferedReader(fileReader);
 
-            setNome(pegaNome(entrada));
+            this.nome = pegaNome(entrada);
+            
 
-            while (!br.readLine().contains("Formato"));
-            setFormato(removeTag(br.readLine()));
+            //set Formato da série
+            while(!br.readLine().contains("Formato"));
+            this.formato = removeTag(br.readLine()).trim();
+            
 
-            while (!br.readLine().contains("Duração"));
-            setDuracao(removeTag(br.readLine()));
+            //set duração da série
+            while(!br.readLine().contains("Duração"));
+            this.duracao = removeTag(br.readLine()).trim();
+            
 
-            while (!br.readLine().contains("País de origem"));
-            setPais(removeTag(br.readLine()));
+            //set país da série
+            while(!br.readLine().contains("País de origem"));
+            this.pais = removeTag(br.readLine()).trim();
 
-            while (!br.readLine().contains("Idioma original"));
-            setIdioma(removeTag(br.readLine()));
+            //set idioma da série
+            while(!br.readLine().contains("Idioma original"));
+            this.idioma = removeTag(br.readLine()).trim();
+            
 
-            while (!br.readLine().contains("Emissora de televisão original"));
-            setEmissora(removeTag(br.readLine()));
+            //set emissora da série
+            while(!br.readLine().contains("Emissora de televisão"));
+            this.emissora = removeTag(br.readLine()).trim();
+            
 
-            while (!br.readLine().contains("Transmissão original"));
-            setTransmissao(removeTag(br.readLine()));
+            //set transmissão original da série
+            while(!br.readLine().contains("Transmissão original"));
+            this.transmissao = removeTag(br.readLine()).trim();
+            
 
-            while (!br.readLine().contains("N.º de temporadas"));
-            setTemporada(transformaINT(removeTag(br.readLine())));
+            //set temporadas da série
+            while(!br.readLine().contains("N.º de temporadas"));
+            this.temporada = transformaINT(removeTag(br.readLine()));
+            
 
-            while (!br.readLine().contains("N.º de episódios"));
-            setEpisodios(transformaINT(removeTag(br.readLine())));
+            //set episódios da série
+            while(!br.readLine().contains("N.º de episódios"));
+            this.episodios = transformaINT(removeTag(br.readLine()));
+            
 
             br.close();
 
@@ -227,68 +243,91 @@ class Serie {
 
 }
 
-//celula
-class CellSerie {
+class Celula {
+	public Serie elemento; // Elemento inserido na celula.
+	public Celula prox; // Aponta a celula prox.
 
-    public Object item;
-    public CellSerie next;
 
-    public CellSerie() {
-        item = null;
-        next = null;
-    }
+	/**
+	 * Construtor da classe.
+	 */
+	public Celula() {
+		this(null);
+	}
 
-    public CellSerie(Object value) {
-        item = value;
-        next = null;
-    }
-
-    public CellSerie(Object value, CellSerie nextCell) {
-        item = value;
-        next = nextCell;
-    }
+	/**
+	 * Construtor da classe.
+	 * @param elemento int inserido na celula.
+	 */
+	public Celula(Serie elemento) {
+      this.elemento = elemento;
+      this.prox = null;
+	}
 }
 
-//pilha
-class pilhaSerie {
-    private CellSerie top;
-    private int qt;
-    public pilhaSerie() {
-        qt = 0;
-    }
+class Pilha {
+	private Celula topo;
 
-    //GET
-    public Object getTop() {
-        Object aux = null;
-        if (top != null) {
-            aux = top.item;
-        }
-        return aux;
-    }
+	/**
+	 * Construtor da classe que cria uma fila sem elementos.
+	 */
+	public Pilha() {
+		topo = null;
+	}
 
-    public int getQuantity() {
-        return qt;
-    }
+	/**
+	 * Insere elemento na pilha (politica FILO).
+	 * 
+	 * @param x int elemento a inserir.
+	 */
+	public void inserir(Serie x) {
+		Celula tmp = new Celula(x);
+		tmp.prox = topo;
+		topo = tmp;
+		tmp = null;
+	}
 
-    //insere na pilha
-    public void stack(Object value) {
-        CellSerie temp = new CellSerie(value);
-        temp.next = top;
-        top = temp;
-        temp = null;
-        qt++;
-    }
+	/**
+	 * Remove elemento da pilha (politica FILO).
+	 * 
+	 * @return Elemento removido.
+	 * @trhows Exception Se a sequencia nao contiver elementos.
+	 */
+	public Serie remover() throws Exception {
+		if (topo == null) {
+			throw new Exception("Erro ao remover!");
+		}
+		Serie resp = topo.elemento;
+		Celula tmp = topo;
+		topo = topo.prox;
+		tmp.prox = null;
+		tmp = null;
+		return resp;
+	}
 
-    //remove da pilha
-    public Object remove() {
-        Object temp = null;
-        if (top != null) {
-            temp = top.item;
-            top = top.next;
-            qt--;
-        }
-        return temp;
-    }
+	/**
+	 * Mostra os elementos separados por espacos, comecando do topo.
+	 */
+	public void mostrar() {
+		//System.out.print("[ ");
+		for (Celula i = topo; i != null; i = i.prox) {
+			System.out.println(i.elemento.getNome() + " " + i.elemento.getFormato() + " " + i.elemento.getDuracao() + " " + i.elemento.getPais() + " " + i.elemento.getIdioma()
+            + " " + i.elemento.getEmissora() + " " + i.elemento.getTransmissao() + " " + i.elemento.getTemporada() + " " + i.elemento.getEpisodios());
+		}
+		//System.out.println("] ");
+	}
+
+	public void mostraPilha() {
+		mostraPilha(topo);
+	}
+
+	private void mostraPilha(Celula i) {
+		if (i != null) {
+			mostraPilha(i.prox);
+			System.out.println("" + i.elemento);
+		}
+	}
+
 }
 
 public class TP02Q06{
@@ -297,26 +336,26 @@ public class TP02Q06{
         return (s.length() == 3 && s.charAt(0) == 'F' && s.charAt(1) == 'I' && s.charAt(2) == 'M');
     }
     
-    public static void alterPile(String entrada, Serie series, pilhaSerie pilha) {
+    public static void alterPile(String entrada, Serie series, Pilha pilha) throws Exception{
         //RESOLVER PROBLEMA NA HR DO PRINT
         if (entrada.charAt(0) == 'I') { //faz o stack
             series.lerSerie(entrada.substring(2));
-            pilha.stack(series.clone()); 
+            pilha.inserir(series.clone()); 
             
             // Insere na pilha
 
         } else if (entrada.charAt(0) == 'R') { // Desempilhar
-            series = (Serie) pilha.remove();
+            series = pilha.remover();
             MyIO.println("(R) " + series.getNome()); 
             
             // imprime o remove
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception{
         String[] entrada = new String[1000];
         Serie series = new Serie(); 
-        pilhaSerie pilha = new pilhaSerie();
+        Pilha pilha = new Pilha();
         int aux= 0, i, stop;
 
         //primeira parte
@@ -326,7 +365,7 @@ public class TP02Q06{
 
         for (i = 0; i < (aux - 1); i++) {
             series.lerSerie(entrada[i]);
-            pilha.stack(series.clone());
+            pilha.inserir(series.clone());
         }
 
         //segunda parte
@@ -343,12 +382,7 @@ public class TP02Q06{
             alterPile(entrada[i], series.clone(), pilha);
         }
 
-        //imprime 
-        aux = pilha.getQuantity();
-        for (i = 0; i < aux; i++) {
-            series = (Serie) pilha.remove();
-            series.printSerie();
-        }
+        pilha.mostrar();
 
     }
 }
